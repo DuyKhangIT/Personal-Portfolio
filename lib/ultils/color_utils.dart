@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ColorUtils {
-  static const Color lightBlue = Color(0xFF7EC7FC);
-  static const Color blue = Color(0xFF0185FE);
-  static const Color grey = Color(0xFFD9D9D9);
-  static const Color borderGreyColor = Color(0xFF9A9A9A);
-  static const Color grey100 = Color(0xFFF8F8F8);
-  static const Color greyAccent = Color(0xFFF1F1F1);
-  static const Color grey300 = Color(0xFFA3A3A3);
-  static const Color green = Color(0xFF1BD15D);
-  static const Color greenAccent = Color(0xFF00CC08);
-  static const Color red = Color(0xFFFF0404);
-  static const Color backgroundColor = Color(0xFFF9F9F9);
-  static const Color orange = Color(0xFFF2AF34);
-  static const Color mainColor = Color(0xFF00477B);
-  static const Color depYellow = Color(0xFFD59944);
+  static const Color whiteDefault = Color(0xFFFFFFFF);
+  static const Color gray50 = Color(0xFFF9FAFB);
+  static const Color gray100 = Color(0xFFF3F4F6);
+  static const Color gray200 = Color(0xFFE5E7EB);
+  static const Color gray300 = Color(0xFFD1D5DB);
+  static const Color gray400 = Color(0xFF9CA3AF);
+  static const Color gray500 = Color(0xFF6B7280);
+  static const Color gray600 = Color(0xFF4B5563);
+  static const Color gray700 = Color(0xFF374151);
+  static const Color gray800 = Color(0xFF1F2937);
+  static const Color gray900 = Color(0xFF111827);
+  static const Color blackDefault = Color(0xFF1A1A1A);
+  static const Color green500 = Color(0xFF10B981);
 }

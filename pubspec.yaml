@@ -74,6 +74,7 @@ flutter:
   assets:
     - assets/images/svg/
     - assets/images/png/
+    - assets/images/gif/
     - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -88,10 +89,25 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Inter
+    - family: InterRegular
       fonts:
         - asset: assets/fonts/Inter-28pt-Regular.ttf
           style: normal
+
+    - family: InterBold
+      fonts:
+        - asset: assets/fonts/Inter-28pt-Bold.ttf
+          weight: 700
+
+    - family: InterMedium
+      fonts:
+        - asset: assets/fonts/Inter-28pt-Medium.ttf
+          weight: 500
+
+    - family: InterSemiBold
+      fonts:
+        - asset: assets/fonts/Inter-28pt-SemiBold.ttf
+          weight: 600
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

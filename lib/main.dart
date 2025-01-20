@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:personal_portfolio/pages/main_page.dart';
 
 import 'application_config.dart';
 import 'Global/locale.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MultiBlocProvider(
           providers: [
+            BlocProvider<SettingBloc>(
+              create: (_) => SettingBloc(),
+            ),
             BlocProvider<BottomNavBarCubit>(
               create: (_) => BottomNavBarCubit(),
             ),
@@ -52,7 +56,7 @@ class MyApp extends StatelessWidget {
                   theme: lightTheme,
                   themeMode: state.themeMode,
                   darkTheme: darkTheme,
-                  //home: const LoadingScreen(),
+                  home: const MainPage(),
                 ),
               );
             },

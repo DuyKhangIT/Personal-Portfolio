@@ -6,7 +6,7 @@ import '../ultils/color_utils.dart';
 List<BottomNavigationBarItem> bottomNavBar(Color? color) {
   double width = 25;
   double height = 25;
-  Color colorActive = ColorUtils.mainColor;
+  Color colorActive = ColorUtils.whiteDefault;
   return [
     BottomNavigationBarItem(
       icon: SvgPicture.asset(
