@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../core/blocs/setting_bloc/setting_bloc.dart';
 import '../../ultils/color_utils.dart';
 import '../../ultils/text_style_utils.dart';
 import 'download_button.dart';
@@ -14,6 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function() onClickExperience;
   final Function() onClickProjects;
   final Function() onClickContact;
+
   const CustomAppBar({
     super.key,
     required this.onClickHome,
@@ -31,13 +34,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: AppBar(
           title: Padding(
             padding: EdgeInsets.only(left: 95.w),
-            child: const Text('Duy Khang'),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: onClickHome,
+                child: const Text('Duy Khang'),
+              ),
+            ),
           ),
           actions: [
-            ActionTab(
-              title: 'Home',
-              onClick: onClickHome,
-            ),
+            // ActionTab(
+            //   title: 'Home',
+            //   onClick: onClickHome,
+            // ),
             ActionTab(
               title: 'About',
               onClick: onClickAbout,
@@ -62,12 +71,40 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 color: ColorUtils.gray300,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: InkWell(
-                onTap: () {},
-                child: SvgPicture.asset('assets/images/svg/ic_light_mode.svg'),
-              ),
+            BlocBuilder<SettingBloc, SettingState>(
+              builder: (context, state) {
+                return MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      context.read<SettingBloc>().add(
+                        SettingThemeModeChanged(
+                          themeMode: state.themeMode == ThemeMode.light
+                              ? ThemeMode.dark
+                              : ThemeMode.light,
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 35,
+                      height: 35,
+                      margin: EdgeInsets.symmetric(horizontal: 16.w),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: ColorUtils.gray100,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: state.themeMode == ThemeMode.dark
+                          ? SvgPicture.asset(
+                              'assets/images/svg/ic_light_mode.svg',
+                            )
+                          : SvgPicture.asset(
+                              'assets/images/svg/ic_dark_mode.svg',
+                            ),
+                    ),
+                  ),
+                );
+              },
             ),
             const DownloadButton(
               buttonColor: ColorUtils.gray900,
@@ -85,6 +122,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 class ActionTab extends StatefulWidget {
   final String title;
   final Function() onClick;
+
   const ActionTab({
     super.key,
     required this.title,

@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:personal_portfolio/pages/widgets/custom_appbar.dart';
+import 'package:personal_portfolio/ultils/text_ultils.dart';
 
+import '../core/blocs/setting_bloc/setting_bloc.dart';
 import '../ultils/color_utils.dart';
 import '../ultils/text_style_utils.dart';
 
@@ -23,9 +26,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final ScrollController _scrollController = ScrollController();
-  void _scrollToIndex(int index, double screenHeight) {
+  void _scrollToIndex(double position) {
     _scrollController.animateTo(
-      index * context.height,
+      position,
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
@@ -36,11 +39,11 @@ class _MainPageState extends State<MainPage> {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: CustomAppBar(
-        onClickHome: () => _scrollToIndex(0, screenHeight),
-        onClickAbout: () => _scrollToIndex(1, screenHeight),
-        onClickExperience: () => _scrollToIndex(2, screenHeight),
-        onClickProjects: () => _scrollToIndex(3, screenHeight),
-        onClickContact: () => _scrollToIndex(4, screenHeight),
+        onClickHome: () => _scrollToIndex(0),
+        onClickAbout: () => _scrollToIndex(screenHeight / 1.75),
+        onClickExperience: () => _scrollToIndex(screenHeight * 1.57),
+        onClickProjects: () => _scrollToIndex(screenHeight * 2.57),
+        onClickContact: () => _scrollToIndex(screenHeight * 3.57),
       ),
       body: ListView(
         controller: _scrollController,

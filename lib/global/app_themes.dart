@@ -45,11 +45,6 @@ ThemeData darkTheme = ThemeData(
         TextStyleUtils.bold(26).copyWith(color: ColorUtils.whiteDefault),
   ),
   scaffoldBackgroundColor: ColorUtils.blackDefault,
-  // textSelectionTheme: const TextSelectionThemeData(
-  //   selectionColor: ColorUtils.mainColor,
-  //   cursorColor: ColorUtils.mainColor,
-  //   selectionHandleColor: ColorUtils.mainColor,
-  // ),
   buttonTheme: const ButtonThemeData(buttonColor: Color(0xFFF9FAFB)),
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
