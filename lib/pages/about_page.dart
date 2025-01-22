@@ -13,7 +13,7 @@ class AboutPage extends StatelessWidget {
           color: state.themeMode == ThemeMode.dark
               ? Colors.black.withOpacity(0.2)
               : ColorUtils.gray50,
-          padding: EdgeInsets.symmetric(vertical: 150.h, horizontal: 130.w),
+          padding: EdgeInsets.symmetric(vertical: 140.h, horizontal: 130.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -22,7 +22,7 @@ class AboutPage extends StatelessWidget {
                   text: "About Me",
                 ),
               ),
-              SizedBox(height: 40.h),
+              SizedBox(height: 80.h),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,

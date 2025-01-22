@@ -77,13 +77,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: () {
-                      context.read<SettingBloc>().add(
-                        SettingThemeModeChanged(
-                          themeMode: state.themeMode == ThemeMode.light
-                              ? ThemeMode.dark
-                              : ThemeMode.light,
-                        ),
-                      );
+                      if (state.themeMode == ThemeMode.system ||
+                          state.themeMode == ThemeMode.light) {
+                        context.read<SettingBloc>().add(
+                              const SettingThemeModeChanged(
+                                themeMode: ThemeMode.dark,
+                              ),
+                            );
+                      } else {
+                        context.read<SettingBloc>().add(
+                              const SettingThemeModeChanged(
+                                themeMode: ThemeMode.light,
+                              ),
+                            );
+                      }
                     },
                     child: Container(
                       width: 35,
