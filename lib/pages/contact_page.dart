@@ -43,13 +43,11 @@ class ContactPage extends StatelessWidget {
           width: 30,
           height: 30,
         ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            child: Text(
-              content,
-              style: TextStyleUtils.bold(30),
-            ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: Text(
+            content,
+            style: TextStyleUtils.bold(20),
           ),
         ),
         InkWell(
