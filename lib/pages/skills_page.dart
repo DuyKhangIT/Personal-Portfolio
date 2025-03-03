@@ -43,8 +43,8 @@ class _SkillsPageState extends State<SkillsPage> {
             padding: EdgeInsets.symmetric(horizontal: 150.w),
             child: Wrap(
               alignment: WrapAlignment.center,
-              spacing: 60,
-              runSpacing: 60,
+              spacing: 60.w,
+              runSpacing: 60.w,
               runAlignment: WrapAlignment.center,
               children: [
                 for (var item in listSkills)
@@ -106,8 +106,8 @@ class _SkillItemState extends State<SkillItem> {
             transform: Matrix4.identity()..scale(isHover ? 1.2 : 1.0),
             child: SvgPicture.asset(
               widget.iconPath,
-              width: 50.w,
-              height: 50.h,
+              width: 50,
+              height: 50,
             ),
           ),
         ),

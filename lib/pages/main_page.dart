@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:personal_portfolio/pages/widgets/custom_appbar.dart';
+import 'package:personal_portfolio/ultils/open_url.dart';
 import 'package:personal_portfolio/ultils/text_ultils.dart';
 
 import '../core/blocs/setting_bloc/setting_bloc.dart';
 import '../core/models/skill.dart';
+import '../global/app_text.dart';
 import '../ultils/color_utils.dart';
 import '../ultils/text_style_utils.dart';
 
@@ -14,7 +17,6 @@ part './home_page.dart';
 part './about_page.dart';
 part './contact_page.dart';
 part './experience_page.dart';
-part './projects_page.dart';
 part './skills_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -42,7 +44,6 @@ class _MainPageState extends State<MainPage> {
         onClickHome: () => _scrollToIndex(0),
         onClickAbout: () => _scrollToIndex(screenHeight / 1.75),
         onClickExperience: () => _scrollToIndex(screenHeight * 2.3),
-        onClickProjects: () => _scrollToIndex(screenHeight * 3.3),
         onClickContact: () => _scrollToIndex(screenHeight * 4.3),
       ),
       body: ListView(
@@ -52,7 +53,6 @@ class _MainPageState extends State<MainPage> {
           AboutPage(),
           SkillsPage(),
           ExperiencePage(),
-          ProjectsPage(),
           ContactPage(),
         ],
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextStyleUtils {
   static String interRegular = "InterRegular";
@@ -9,24 +8,24 @@ class TextStyleUtils {
 
   static TextStyle regular(double size) => TextStyle(
         fontWeight: FontWeight.w400,
-        fontSize: size.sp,
+        fontSize: size,
         fontFamily: interRegular,
       );
 
   static TextStyle medium(double size) => TextStyle(
         fontWeight: FontWeight.w500,
-        fontSize: size.sp,
+        fontSize: size,
         fontFamily: interMedium,
       );
   static TextStyle semiBold(double size) => TextStyle(
         fontWeight: FontWeight.w600,
-        fontSize: size.sp,
+        fontSize: size,
         fontFamily: interSemiBold,
       );
 
   static TextStyle bold(double size) => TextStyle(
         fontWeight: FontWeight.w800,
-        fontSize: size.sp,
+        fontSize: size,
         fontFamily: interBold,
       );
 }

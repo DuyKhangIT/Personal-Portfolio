@@ -13,6 +13,7 @@ ThemeData lightTheme = ThemeData(
     titleTextStyle:
         TextStyleUtils.bold(26).copyWith(color: ColorUtils.blackDefault),
   ),
+  textSelectionTheme: const TextSelectionThemeData(selectionColor: Colors.grey),
   scaffoldBackgroundColor: Colors.white,
   iconTheme: IconThemeData(
     color: Colors.grey.shade600,
@@ -45,6 +46,7 @@ ThemeData darkTheme = ThemeData(
         TextStyleUtils.bold(26).copyWith(color: ColorUtils.whiteDefault),
   ),
   scaffoldBackgroundColor: ColorUtils.blackDefault,
+  textSelectionTheme: const TextSelectionThemeData(selectionColor: Colors.grey),
   buttonTheme: const ButtonThemeData(buttonColor: Color(0xFFF9FAFB)),
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,

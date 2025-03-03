@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:personal_portfolio/ultils/color_utils.dart';
+import 'package:personal_portfolio/ultils/download_file.dart';
 import 'package:personal_portfolio/ultils/text_style_utils.dart';
 
 class DownloadButton extends StatefulWidget {
@@ -36,10 +37,15 @@ class _DownloadButtonState extends State<DownloadButton> {
         ),
         alignment: Alignment.center,
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            DownloadFile.downloadPdf(
+              'assets/images/pdf/HuynhDuyKhang_FlutterEngineer.pdf',
+              'Huynh Duy Khang - Mobile Developer (Flutter).pdf',
+            );
+          },
           child: Text(
             'Download CV',
-            style: TextStyleUtils.semiBold(12).copyWith(color: Colors.white),
+            style: TextStyleUtils.semiBold(16).copyWith(color: Colors.white),
             textAlign: TextAlign.center,
           ),
         ),

@@ -14,7 +14,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function() onClickHome;
   final Function() onClickAbout;
   final Function() onClickExperience;
-  final Function() onClickProjects;
   final Function() onClickContact;
 
   const CustomAppBar({
@@ -22,7 +21,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.onClickHome,
     required this.onClickAbout,
     required this.onClickExperience,
-    required this.onClickProjects,
     required this.onClickContact,
   });
 
@@ -43,10 +41,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           actions: [
-            // ActionTab(
-            //   title: 'Home',
-            //   onClick: onClickHome,
-            // ),
+            ActionTab(
+              title: 'Home',
+              onClick: onClickHome,
+            ),
             ActionTab(
               title: 'About',
               onClick: onClickAbout,
@@ -54,10 +52,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ActionTab(
               title: 'Experience',
               onClick: onClickExperience,
-            ),
-            ActionTab(
-              title: 'Projects',
-              onClick: onClickProjects,
             ),
             ActionTab(
               title: 'Contact',
@@ -114,8 +108,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               },
             ),
             const DownloadButton(
-              buttonColor: ColorUtils.gray900,
-            )
+              buttonColor: ColorUtils.gray700,
+            ),
           ],
         ),
       ),
@@ -145,30 +139,40 @@ class _ActionTabState extends State<ActionTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onHover: (_) {
-          setState(() {
-            isHover = true;
-          });
-        },
-        onExit: (_) {
-          setState(() {
-            isHover = false;
-          });
-        },
-        child: GestureDetector(
-          onTap: widget.onClick,
-          child: Text(
-            widget.title,
-            style: TextStyleUtils.medium(12).copyWith(
-              color: isHover ? ColorUtils.gray900 : ColorUtils.gray500,
+    return BlocBuilder<SettingBloc, SettingState>(
+      builder: (context, state) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            onHover: (_) {
+              setState(() {
+                isHover = true;
+              });
+            },
+            onExit: (_) {
+              setState(() {
+                isHover = false;
+              });
+            },
+            child: GestureDetector(
+              onTap: widget.onClick,
+              child: Text(
+                widget.title,
+                style: TextStyleUtils.medium(16).copyWith(
+                  color: isHover
+                      ? state.themeMode == ThemeMode.dark
+                          ? ColorUtils.whiteDefault
+                          : ColorUtils.gray900
+                      : state.themeMode == ThemeMode.dark
+                          ? ColorUtils.gray300
+                          : ColorUtils.gray500,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

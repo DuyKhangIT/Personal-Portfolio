@@ -19,7 +19,7 @@ class AboutPage extends StatelessWidget {
             children: [
               Center(
                 child: TextViewUtils.titleBold(
-                  text: "About Me",
+                  text: AppText.aboutMe,
                 ),
               ),
               SizedBox(height: 80.h),
@@ -30,9 +30,9 @@ class AboutPage extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.r),
                     child: Image.asset(
-                      'assets/images/png/ic_linkedin.png',
-                      width: (width / 6).w,
-                      height: (height / 2).h,
+                      'assets/images/png/avt.png',
+                      width: (width / 4),
+                      height: (height / 2),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -45,36 +45,28 @@ class AboutPage extends StatelessWidget {
                       children: [
                         Center(
                           child: Text(
-                            "Curious about me? Here you have it:",
+                            AppText.aboutDes,
                             style: TextStyleUtils.semiBold(22),
                             textAlign: TextAlign.center,
                           ),
                         ),
                         SizedBox(height: 20.h),
                         TextViewUtils.descriptionsRegular(
-                          text:
-                              "I'm a passionate, self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.",
+                          text: AppText.aboutMeOne,
                         ),
                         SizedBox(height: 20.h),
                         TextViewUtils.descriptionsRegular(
-                          text:
-                              "I'm a passionate, self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.",
+                          text: AppText.aboutMeTwo,
                         ),
                         SizedBox(height: 20.h),
                         TextViewUtils.descriptionsRegular(
-                          text:
-                              "I'm a passionate, self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.",
+                          text: AppText.aboutMeTh,
                         ),
                         SizedBox(height: 20.h),
                         TextViewUtils.descriptionsRegular(
-                          text:
-                              "I'm a passionate, self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.",
+                          text: AppText.aboutMeFour,
                         ),
                         SizedBox(height: 20.h),
-                        TextViewUtils.descriptionsRegular(
-                          text:
-                              "I'm a passionate, self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.",
-                        ),
                       ],
                     ),
                   )

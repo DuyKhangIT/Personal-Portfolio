@@ -5,16 +5,26 @@ class TextViewUtils {
   static SelectableText descriptionsRegular({required String text}) {
     return SelectableText(
       text,
-      style: TextStyleUtils.regular(12),
+      style: TextStyleUtils.regular(16),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.justify,
     );
   }
 
-  static SelectableText titleBold({required String text}) {
+  static Text titleBold({required String text, double? fontSize}) {
+    return Text(
+      text,
+      style: TextStyleUtils.bold(fontSize ?? 50),
+      textScaler: TextScaler.noScaling,
+    );
+  }
+
+  static SelectableText selectTitleBold(
+      {required String text, double? fontSize}) {
     return SelectableText(
       text,
-      style: TextStyleUtils.bold(30),
+      style: TextStyleUtils.bold(fontSize ?? 50),
+      textScaler: TextScaler.noScaling,
     );
   }
 }

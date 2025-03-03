@@ -5,15 +5,70 @@ class ContactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      color: Colors.pink,
-      child: Center(
-        child: Text(
-          "Box 2: Contact",
-          style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 140.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextViewUtils.titleBold(text: "Contact"),
+          SizedBox(height: 10.h),
+          TextViewUtils.descriptionsRegular(
+            text: AppText.contactDes,
+          ),
+          SizedBox(height: 30.h),
+          contentRow(
+            icon: 'assets/images/svg/ic_mail.svg',
+            content: 'huynhduykhang2001gv@gmail.com',
+          ),
+          contentRow(
+            icon: 'assets/images/svg/ic_telephone.svg',
+            content: '+84-762449965',
+          ),
+        ],
       ),
     );
+  }
+
+  Widget contentRow({
+    required String icon,
+    required String content,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SvgPicture.asset(
+          icon,
+          width: 30,
+          height: 30,
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Text(
+              content,
+              style: TextStyleUtils.bold(30),
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            copyToClipboard(content);
+          },
+          focusColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          child: SvgPicture.asset(
+            'assets/images/svg/ic_copy.svg',
+            width: 35,
+            height: 35,
+          ),
+        ),
+      ],
+    );
+  }
+
+  void copyToClipboard(String text) {
+    Clipboard.setData(ClipboardData(text: text));
   }
 }
