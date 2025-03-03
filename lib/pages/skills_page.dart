@@ -9,19 +9,70 @@ class SkillsPage extends StatefulWidget {
 
 class _SkillsPageState extends State<SkillsPage> {
   List<Skill> listSkills = [
-    Skill(iconPath: 'assets/images/svg/ic_flutter.svg', name: 'Flutter'),
-    Skill(iconPath: 'assets/images/svg/ic_dart.svg', name: 'Dart'),
-    Skill(iconPath: 'assets/images/svg/ic_kotlin.svg', name: 'Kotlin'),
-    Skill(iconPath: 'assets/images/svg/ic_java.svg', name: 'Java'),
-    Skill(iconPath: 'assets/images/svg/ic_nodejs.svg', name: 'Node JS'),
-    Skill(iconPath: 'assets/images/svg/ic_mongo.svg', name: 'Mongo DB'),
-    Skill(iconPath: 'assets/images/svg/ic_sql.svg', name: 'SQL Server'),
-    Skill(iconPath: 'assets/images/svg/ic_socket_io.svg', name: 'Socket io'),
-    Skill(iconPath: 'assets/images/svg/ic_git.svg', name: 'Git'),
-    Skill(iconPath: 'assets/images/svg/ic_android.svg', name: 'Android Studio'),
-    Skill(iconPath: 'assets/images/svg/ic_vscode.svg', name: 'Visual Code'),
-    Skill(iconPath: 'assets/images/svg/ic_jira.svg', name: 'Jira'),
-    Skill(iconPath: 'assets/images/svg/ic_rocketchat.svg', name: 'Rocket Chat'),
+    Skill(
+      iconPath: 'assets/images/svg/ic_flutter.svg',
+      name: 'Flutter',
+      url: 'https://flutter.dev/',
+    ),
+    Skill(
+      iconPath: 'assets/images/svg/ic_dart.svg',
+      name: 'Dart',
+      url: 'https://dart.dev/',
+    ),
+    Skill(
+        iconPath: 'assets/images/svg/ic_kotlin.svg',
+        name: 'Kotlin',
+        url: 'https://kotlinlang.org/,'),
+    Skill(
+      iconPath: 'assets/images/svg/ic_java.svg',
+      name: 'Java',
+      url: 'https://www.java.com/en/',
+    ),
+    Skill(
+      iconPath: 'assets/images/svg/ic_nodejs.svg',
+      name: 'Node JS',
+      url: 'https://nodejs.org/en',
+    ),
+    Skill(
+      iconPath: 'assets/images/svg/ic_mongo.svg',
+      name: 'Mongo DB',
+      url: 'https://www.mongodb.com/',
+    ),
+    Skill(
+      iconPath: 'assets/images/svg/ic_sql.svg',
+      name: 'SQL Server',
+      url: 'https://www.microsoft.com/en-us/sql-server',
+    ),
+    Skill(
+      iconPath: 'assets/images/svg/ic_socket_io.svg',
+      name: 'Socket io',
+      url: 'https://socket.io/',
+    ),
+    Skill(
+      iconPath: 'assets/images/svg/ic_git.svg',
+      name: 'Git',
+      url: 'https://git-scm.com/',
+    ),
+    Skill(
+      iconPath: 'assets/images/svg/ic_android.svg',
+      name: 'Android Studio',
+      url: 'https://developer.android.com/',
+    ),
+    Skill(
+      iconPath: 'assets/images/svg/ic_vscode.svg',
+      name: 'Visual Code',
+      url: 'https://code.visualstudio.com/',
+    ),
+    Skill(
+      iconPath: 'assets/images/svg/ic_jira.svg',
+      name: 'Jira',
+      url: 'https://www.atlassian.com/software/jira',
+    ),
+    Skill(
+      iconPath: 'assets/images/svg/ic_rocketchat.svg',
+      name: 'Rocket Chat',
+      url: 'https://www.rocket.chat/',
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -51,6 +102,7 @@ class _SkillsPageState extends State<SkillsPage> {
                   SkillItem(
                     iconPath: item.iconPath,
                     name: item.name,
+                    url: item.url,
                     isHover: false,
                   ),
               ],
@@ -65,11 +117,13 @@ class _SkillsPageState extends State<SkillsPage> {
 class SkillItem extends StatefulWidget {
   final String iconPath;
   final String name;
+  final String url;
   final bool isHover;
   const SkillItem({
     super.key,
     required this.iconPath,
     required this.name,
+    required this.url,
     required this.isHover,
   });
 
@@ -89,25 +143,30 @@ class _SkillItemState extends State<SkillItem> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onHover: (v) {
-            setState(() {
-              isHover = true;
-            });
+        GestureDetector(
+          onTap: () {
+            OpenWeb.openURL(widget.url);
           },
-          onExit: (v) {
-            setState(() {
-              isHover = false;
-            });
-          },
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            transform: Matrix4.identity()..scale(isHover ? 1.2 : 1.0),
-            child: SvgPicture.asset(
-              widget.iconPath,
-              width: 50,
-              height: 50,
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            onHover: (v) {
+              setState(() {
+                isHover = true;
+              });
+            },
+            onExit: (v) {
+              setState(() {
+                isHover = false;
+              });
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
+              transform: Matrix4.identity()..scale(isHover ? 1.2 : 1.0),
+              child: SvgPicture.asset(
+                widget.iconPath,
+                width: 50,
+                height: 50,
+              ),
             ),
           ),
         ),

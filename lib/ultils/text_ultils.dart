@@ -7,7 +7,6 @@ class TextViewUtils {
       text,
       style: TextStyleUtils.regular(16),
       textDirection: TextDirection.ltr,
-      textAlign: TextAlign.justify,
     );
   }
 

@@ -26,34 +26,31 @@ class ExperiencePage extends StatelessWidget {
                 text: AppText.experienceDes,
               ),
               SizedBox(height: 40.h),
-              experienceCard(
+              const ExperienceCard(
                 icon: 'assets/images/png/ic_ecr.png',
                 title: "Mobile Developer (Flutter)",
                 company: "ECR Company",
                 date: "February 2024 - Present",
                 description:
                     "Working on various projects, concentrating on frontend development.",
-                isDark: state.themeMode == ThemeMode.dark,
               ),
               SizedBox(height: 20.h),
-              experienceCard(
+              const ExperienceCard(
                 icon: 'assets/images/png/ic_ecr.png',
                 title: "Mobile Developer (Flutter)",
                 company: "ECR Company",
                 date: "February 2024 - Present",
                 description:
                     "Leading a team of developers, focusing on project management.",
-                isDark: state.themeMode == ThemeMode.dark,
               ),
               SizedBox(height: 20.h),
-              experienceCard(
+              const ExperienceCard(
                 icon: 'assets/images/png/ic_ecaraid.png',
                 title: "Mobile Developer (Flutter)",
                 company: "EcarAid",
                 date: "June 2022 - January 2024",
                 description:
                     "Handling full-stack development tasks across multiple projects.",
-                isDark: state.themeMode == ThemeMode.dark,
               ),
             ],
           ),
@@ -61,24 +58,37 @@ class ExperiencePage extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget experienceCard({
-    required String icon,
-    required String title,
-    required String company,
-    required String date,
-    required String description,
-    required bool isDark,
-  }) {
-    return Card(
-      color: isDark ? ColorUtils.gray700 : ColorUtils.whiteDefault,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
+class ExperienceCard extends StatelessWidget {
+  final String icon;
+  final String title;
+  final String company;
+  final String date;
+  final String description;
+  const ExperienceCard({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.company,
+    required this.date,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SettingBloc, SettingState>(
+      builder: (context, state) {
+        return Container(
+          decoration: BoxDecoration(
+            color: state.themeMode == ThemeMode.dark
+                ? ColorUtils.gray700
+                : ColorUtils.whiteDefault,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -88,24 +98,26 @@ class ExperiencePage extends StatelessWidget {
                   height: 40,
                   fit: BoxFit.contain,
                 ),
-                const SizedBox(width: 60),
-                TextViewUtils.selectTitleBold(text: title, fontSize: 16),
-                const SizedBox(width: 60),
-                Expanded(
-                  child: Text(
-                    date,
-                    style:
-                        TextStyleUtils.regular(14).copyWith(color: Colors.grey),
-                    textAlign: TextAlign.center,
-                  ),
+                Spacer(),
+                Column(
+                  children: [
+                    TextViewUtils.selectTitleBold(text: title, fontSize: 16),
+                    SizedBox(height: 10.h),
+                    Text(description),
+                  ],
+                ),
+                Spacer(),
+                Text(
+                  date,
+                  style:
+                      TextStyleUtils.regular(14).copyWith(color: Colors.grey),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
-            SizedBox(height: 10.h),
-            Text(description),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

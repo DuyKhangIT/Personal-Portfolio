@@ -127,7 +127,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 200.w),
+                padding: EdgeInsets.only(left: 180.w),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30.r),
                   child: Image.asset(
