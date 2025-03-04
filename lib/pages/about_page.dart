@@ -5,7 +5,6 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return BlocBuilder<SettingBloc, SettingState>(
       builder: (context, state) {
@@ -13,9 +12,10 @@ class AboutPage extends StatelessWidget {
           color: state.themeMode == ThemeMode.dark
               ? Colors.black.withOpacity(0.2)
               : ColorUtils.gray50,
-          padding: EdgeInsets.symmetric(vertical: 140.h, horizontal: 130.w),
+          padding: EdgeInsets.symmetric(vertical: 140.h),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Center(
                 child: TextViewUtils.titleBold(
@@ -23,21 +23,22 @@ class AboutPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 80.h),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+              Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                runSpacing: 40.h,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.r),
                     child: Image.asset(
                       'assets/images/png/avt.png',
-                      width: (width / 4),
-                      height: (height / 2),
+                      width: 350,
+                      height: 347,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(width: 120.w),
-                  Expanded(
+                  SizedBox(width: 60.w),
+                  SizedBox(
+                    width: width / 1.55,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,

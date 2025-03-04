@@ -39,9 +39,6 @@ class MyApp extends StatelessWidget {
             BlocProvider<SettingBloc>(
               create: (_) => SettingBloc(),
             ),
-            BlocProvider<BottomNavBarCubit>(
-              create: (_) => BottomNavBarCubit(),
-            ),
           ],
           child: BlocBuilder<SettingBloc, SettingState>(
             builder: (context, state) {

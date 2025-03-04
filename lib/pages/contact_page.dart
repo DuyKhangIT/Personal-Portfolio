@@ -12,9 +12,13 @@ class ContactPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextViewUtils.titleBold(text: "Contact"),
-          SizedBox(height: 10.h),
-          TextViewUtils.descriptionsRegular(
-            text: AppText.contactDes,
+          SizedBox(height: 20.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 60.w),
+            child: TextViewUtils.descriptionsRegular(
+              text: AppText.contactDes,
+              textAlign: TextAlign.center
+            ),
           ),
           SizedBox(height: 30.h),
           contentRow(

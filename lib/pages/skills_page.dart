@@ -77,8 +77,9 @@ class _SkillsPageState extends State<SkillsPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 140.h, horizontal: 130.w),
+      padding: EdgeInsets.symmetric(vertical: 140.h),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
             child: TextViewUtils.titleBold(

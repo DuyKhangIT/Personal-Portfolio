@@ -8,13 +8,27 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<SettingBloc, SettingState>(
       builder: (context, state) {
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 112.w, vertical: 80.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: EdgeInsets.symmetric(vertical: 80.h),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            runSpacing: 40.h,
+            spacing: 10.w,
             children: [
-              Expanded(
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Image.asset(
+                  width: 300,
+                  height: 347,
+                  'assets/images/png/avatars.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(width: 40.w),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 1.55,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     //
                     RichText(
@@ -27,10 +41,13 @@ class HomePage extends StatelessWidget {
                           ),
                           WidgetSpan(child: SizedBox(width: 10.w)),
                           WidgetSpan(
-                            child: Image.asset(
-                              'assets/images/gif/ic_hi.gif',
-                              width: 50,
-                              height: 50,
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 12.h),
+                              child: Image.asset(
+                                'assets/images/gif/ic_hi.gif',
+                                width: 50,
+                                height: 50,
+                              ),
                             ),
                           )
                         ],
@@ -124,18 +141,6 @@ class HomePage extends StatelessWidget {
                       ],
                     )
                   ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 180.w),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30.r),
-                  child: Image.asset(
-                    width: 290.w,
-                    height: 347.h,
-                    'assets/images/png/avatars.png',
-                    fit: BoxFit.cover,
-                  ),
                 ),
               ),
             ],
