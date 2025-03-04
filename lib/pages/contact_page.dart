@@ -37,7 +37,7 @@ class ContactPage extends StatelessWidget {
     required String content,
   }) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      padding: EdgeInsets.symmetric(horizontal: 120.w),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -47,13 +47,15 @@ class ContactPage extends StatelessWidget {
             width: 30,
             height: 30,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
+          const SizedBox(width: 10),
+          Expanded(
             child: Text(
               content,
               style: TextStyleUtils.bold(20),
+              textAlign: TextAlign.center,
             ),
           ),
+          const SizedBox(width: 10),
           InkWell(
             onTap: () {
               copyToClipboard(content);
