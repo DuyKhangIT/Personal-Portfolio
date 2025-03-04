@@ -28,7 +28,7 @@ class _DownloadButtonState extends State<DownloadButton> {
       onHover: (v) => _onHover(true),
       onExit: (v) => _onHover(false),
       child: Container(
-        height: 30.h,
+        height: 30,
         margin: EdgeInsets.only(right: 80.w),
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         decoration: BoxDecoration(

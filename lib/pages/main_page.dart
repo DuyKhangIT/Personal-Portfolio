@@ -84,7 +84,7 @@ class _MainPageState extends State<MainPage> {
           backgroundColor: state.themeMode == ThemeMode.dark
               ? ColorUtils.blackDefault
               : ColorUtils.whiteDefault,
-          child: Column(
+          child: ListView(
             children: [
               Padding(
                 padding:

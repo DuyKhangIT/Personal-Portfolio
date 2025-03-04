@@ -26,6 +26,7 @@ class AboutPage extends StatelessWidget {
               Wrap(
                 alignment: WrapAlignment.spaceBetween,
                 runSpacing: 40.h,
+                spacing: 10.w,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.r),
@@ -36,7 +37,7 @@ class AboutPage extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(width: 60.w),
+                  SizedBox(width: 40.w),
                   SizedBox(
                     width: width / 1.55,
                     child: Column(

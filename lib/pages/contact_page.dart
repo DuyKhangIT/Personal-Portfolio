@@ -16,9 +16,7 @@ class ContactPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 60.w),
             child: TextViewUtils.descriptionsRegular(
-              text: AppText.contactDes,
-              textAlign: TextAlign.center
-            ),
+                text: AppText.contactDes, textAlign: TextAlign.center),
           ),
           SizedBox(height: 30.h),
           contentRow(
@@ -38,35 +36,38 @@ class ContactPage extends StatelessWidget {
     required String icon,
     required String content,
   }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SvgPicture.asset(
-          icon,
-          width: 30,
-          height: 30,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w),
-          child: Text(
-            content,
-            style: TextStyleUtils.bold(20),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            icon,
+            width: 30,
+            height: 30,
           ),
-        ),
-        InkWell(
-          onTap: () {
-            copyToClipboard(content);
-          },
-          focusColor: Colors.transparent,
-          hoverColor: Colors.transparent,
-          child: SvgPicture.asset(
-            'assets/images/svg/ic_copy.svg',
-            width: 35,
-            height: 35,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Text(
+              content,
+              style: TextStyleUtils.bold(20),
+            ),
           ),
-        ),
-      ],
+          InkWell(
+            onTap: () {
+              copyToClipboard(content);
+            },
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            child: SvgPicture.asset(
+              'assets/images/svg/ic_copy.svg',
+              width: 35,
+              height: 35,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
