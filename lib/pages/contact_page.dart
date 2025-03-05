@@ -36,40 +36,35 @@ class ContactPage extends StatelessWidget {
     required String icon,
     required String content,
   }) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 120.w),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            icon,
-            width: 30,
-            height: 30,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SvgPicture.asset(
+          icon,
+          width: 30,
+          height: 30,
+        ),
+        const SizedBox(width: 10),
+        Text(
+          content,
+          style: TextStyleUtils.bold(16),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(width: 10),
+        InkWell(
+          onTap: () {
+            copyToClipboard(content);
+          },
+          focusColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          child: SvgPicture.asset(
+            'assets/images/svg/ic_copy.svg',
+            width: 35,
+            height: 35,
           ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              content,
-              style: TextStyleUtils.bold(20),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(width: 10),
-          InkWell(
-            onTap: () {
-              copyToClipboard(content);
-            },
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            child: SvgPicture.asset(
-              'assets/images/svg/ic_copy.svg',
-              width: 35,
-              height: 35,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

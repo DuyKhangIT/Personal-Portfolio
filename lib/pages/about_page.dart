@@ -29,7 +29,7 @@ class AboutPage extends StatelessWidget {
                 spacing: 10.w,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(20.r),
+                    borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
                       'assets/images/png/avt.png',
                       width: 300,
