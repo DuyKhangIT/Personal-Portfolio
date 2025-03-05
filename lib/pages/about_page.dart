@@ -32,7 +32,7 @@ class AboutPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20.r),
                     child: Image.asset(
                       'assets/images/png/avt.png',
-                      width: 350,
+                      width: 300,
                       height: 347,
                       fit: BoxFit.cover,
                     ),
