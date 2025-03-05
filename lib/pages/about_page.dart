@@ -43,7 +43,6 @@ class AboutPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Center(
                           child: Text(
