@@ -1,21 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:personal_portfolio/pages/widgets/milk_ui.dart';
 
-import '../../core/blocs/setting_bloc/setting_bloc.dart';
 import '../../ultils/color_utils.dart';
 import '../../ultils/text_style_utils.dart';
 import 'download_button.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final Function() onClickHome;
-  final Function() onClickAbout;
-  final Function() onClickSkill;
-  final Function() onClickExperience;
-  final Function() onClickContact;
+  final VoidCallback onClickHome;
+  final VoidCallback onClickAbout;
+  final VoidCallback onClickSkill;
+  final VoidCallback onClickExperience;
+  final VoidCallback onClickContact;
 
   const CustomAppBar({
     super.key,
@@ -28,114 +26,61 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
     return ClipRect(
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-        child: AppBar(
-          title: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 95.w),
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: onClickHome,
-                child: const Text('Duy Khang'),
-              ),
+        filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+        child: Container(
+          decoration: BoxDecoration(
+            color: ColorUtils.ink.withOpacity(0.55),
+            border: Border(
+              bottom: BorderSide(color: Colors.white.withOpacity(0.07)),
             ),
           ),
-          actions: (MediaQuery.of(context).size.width < 810)
-              ? null
-              : [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ActionTab(
-                        title: 'Home',
-                        onClick: onClickHome,
-                      ),
-                      ActionTab(
-                        title: 'About',
-                        onClick: onClickAbout,
-                      ),
-                      ActionTab(
-                        title: 'Skill',
-                        onClick: onClickSkill,
-                      ),
-                      ActionTab(
-                        title: 'Experience',
-                        onClick: onClickExperience,
-                      ),
-                      ActionTab(
-                        title: 'Contact',
-                        onClick: onClickContact,
-                      ),
-                      SizedBox(
-                        height: 25.h,
-                        child: const VerticalDivider(
-                          width: 1,
-                          thickness: 1,
-                          color: ColorUtils.gray300,
-                        ),
-                      ),
-                      BlocBuilder<SettingBloc, SettingState>(
-                        builder: (context, state) {
-                          return MouseRegion(
-                            cursor: SystemMouseCursors.click,
-                            child: GestureDetector(
-                              onTap: () {
-                                if (state.themeMode == ThemeMode.system ||
-                                    state.themeMode == ThemeMode.light) {
-                                  context.read<SettingBloc>().add(
-                                        const SettingThemeModeChanged(
-                                          themeMode: ThemeMode.dark,
-                                        ),
-                                      );
-                                } else {
-                                  context.read<SettingBloc>().add(
-                                        const SettingThemeModeChanged(
-                                          themeMode: ThemeMode.light,
-                                        ),
-                                      );
-                                }
-                              },
-                              child: Container(
-                                width: 35,
-                                height: 35,
-                                margin: EdgeInsets.symmetric(horizontal: 16.w),
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: ColorUtils.gray100,
-                                  borderRadius: BorderRadius.circular(10.r),
-                                ),
-                                child: state.themeMode == ThemeMode.dark
-                                    ? SvgPicture.asset(
-                                        'assets/images/svg/ic_light_mode.svg',
-                                      )
-                                    : SvgPicture.asset(
-                                        'assets/images/svg/ic_dark_mode.svg',
-                                      ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      const DownloadButton(
-                        buttonColor: ColorUtils.gray700,
-                      ),
-                    ],
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            iconTheme: const IconThemeData(color: ColorUtils.textPrimary),
+            titleSpacing: 0,
+            // Single download CV button lives at the top-left, beside the
+            // wordmark. The right side carries navigation only.
+            title: Padding(
+              padding: EdgeInsets.symmetric(horizontal: isMobile ? 16.w : 64.w),
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: onClickHome,
+                  child: GradientText(
+                    'Duy Khang',
+                    style:
+                        TextStyleUtils.bold(24).copyWith(letterSpacing: -0.5),
                   ),
-                ],
+                ),
+              ),
+            ),
+            actions: isMobile
+                ? null
+                : [
+                    ActionTab(title: 'Home', onClick: onClickHome),
+                    ActionTab(title: 'About', onClick: onClickAbout),
+                    ActionTab(title: 'Skills', onClick: onClickSkill),
+                    ActionTab(title: 'Experience', onClick: onClickExperience),
+                    ActionTab(title: 'Contact', onClick: onClickContact),
+                    SizedBox(width: 64.w),
+                  ],
+          ),
         ),
       ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(65.0);
+  Size get preferredSize => const Size.fromHeight(72.0);
 }
 
 class ActionTab extends StatefulWidget {
   final String title;
-  final Function() onClick;
+  final VoidCallback onClick;
 
   const ActionTab({
     super.key,
@@ -148,140 +93,26 @@ class ActionTab extends StatefulWidget {
 }
 
 class _ActionTabState extends State<ActionTab> {
-  bool isHover = false;
+  bool _hover = false;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingBloc, SettingState>(
-      builder: (context, state) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            onHover: (_) {
-              setState(() {
-                isHover = true;
-              });
-            },
-            onExit: (_) {
-              setState(() {
-                isHover = false;
-              });
-            },
-            child: GestureDetector(
-              onTap: widget.onClick,
-              child: Text(
-                widget.title,
-                style: TextStyleUtils.medium(16).copyWith(
-                  color: isHover
-                      ? state.themeMode == ThemeMode.dark
-                          ? ColorUtils.whiteDefault
-                          : ColorUtils.gray900
-                      : state.themeMode == ThemeMode.dark
-                          ? ColorUtils.gray300
-                          : ColorUtils.gray500,
-                ),
-              ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 14.w),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _hover = true),
+        onExit: (_) => setState(() => _hover = false),
+        child: GestureDetector(
+          onTap: widget.onClick,
+          child: Text(
+            widget.title,
+            style: TextStyleUtils.medium(15).copyWith(
+              color: _hover ? ColorUtils.textPrimary : ColorUtils.textSecondary,
             ),
           ),
-        );
-      },
-    );
-  }
-}
-
-class ShowTopBarMenu extends StatefulWidget {
-  final Function() onClickHome;
-  final Function() onClickAbout;
-  final Function() onClickExperience;
-  final Function() onClickContact;
-  const ShowTopBarMenu({
-    super.key,
-    required this.onClickHome,
-    required this.onClickAbout,
-    required this.onClickExperience,
-    required this.onClickContact,
-  });
-
-  @override
-  State<ShowTopBarMenu> createState() => _ShowTopBarMenuState();
-}
-
-class _ShowTopBarMenuState extends State<ShowTopBarMenu> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ActionTab(
-          title: 'Home',
-          onClick: widget.onClickHome,
         ),
-        ActionTab(
-          title: 'About',
-          onClick: widget.onClickAbout,
-        ),
-        ActionTab(
-          title: 'Experience',
-          onClick: widget.onClickExperience,
-        ),
-        ActionTab(
-          title: 'Contact',
-          onClick: widget.onClickContact,
-        ),
-        SizedBox(
-          height: 25.h,
-          child: const VerticalDivider(
-            width: 1,
-            thickness: 1,
-            color: ColorUtils.gray300,
-          ),
-        ),
-        BlocBuilder<SettingBloc, SettingState>(
-          builder: (context, state) {
-            return MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  if (state.themeMode == ThemeMode.system ||
-                      state.themeMode == ThemeMode.light) {
-                    context.read<SettingBloc>().add(
-                          const SettingThemeModeChanged(
-                            themeMode: ThemeMode.dark,
-                          ),
-                        );
-                  } else {
-                    context.read<SettingBloc>().add(
-                          const SettingThemeModeChanged(
-                            themeMode: ThemeMode.light,
-                          ),
-                        );
-                  }
-                },
-                child: Container(
-                  width: 35,
-                  height: 35,
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: ColorUtils.gray100,
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  child: state.themeMode == ThemeMode.dark
-                      ? SvgPicture.asset(
-                          'assets/images/svg/ic_light_mode.svg',
-                        )
-                      : SvgPicture.asset(
-                          'assets/images/svg/ic_dark_mode.svg',
-                        ),
-                ),
-              ),
-            );
-          },
-        ),
-        const DownloadButton(
-          buttonColor: ColorUtils.gray700,
-        ),
-      ],
+      ),
     );
   }
 }

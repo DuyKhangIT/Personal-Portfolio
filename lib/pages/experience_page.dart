@@ -1,174 +1,182 @@
 part of './main_page.dart';
 
 class ExperiencePage extends StatelessWidget {
-  const ExperiencePage({
-    super.key,
-  });
+  const ExperiencePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingBloc, SettingState>(
-      builder: (context, state) {
-        return Container(
-          color: state.themeMode == ThemeMode.dark
-              ? Colors.black.withOpacity(0.2)
-              : ColorUtils.gray50,
-          padding: EdgeInsets.symmetric(vertical: 140.h, horizontal: 130.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextViewUtils.titleBold(
-                text: AppText.experience,
-              ),
-              SizedBox(height: 20.h),
-              TextViewUtils.descriptionsRegular(
-                text: AppText.experienceDes,
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 40.h),
-              const ExperienceCard(
-                icon: 'assets/images/png/ic_ecr.png',
-                title: "Rail Pro App - Mobile Developer (Flutter)",
-                company: "ECR Company",
-                date: "February 2024 - Present",
-                descriptions: [
-                  "Synced server data to local databases (Hive, Floor).",
-                  "Implemented lazy loading for product lists and email/SMS notifications",
-                  "Developed End of Day functionality to summarize and push data to the server",
-                  "Handled order tracking and API configurations with Retrofit",
-                  "Build and deploy App on Testflight",
-                  "Support UI design for applications with Designer",
-                  "Support manual testing with QC",
-                  "Support testing API with BE",
-                  "Meeting and discussing with Teams",
-                ],
-              ),
-              SizedBox(height: 30.h),
-              const ExperienceCard(
-                icon: 'assets/images/png/ic_ecr.png',
-                title: "IMPL App - Mobile Developer (Flutter)",
-                company: "ECR Company",
-                date: "February 2024 - Present",
-                descriptions: [
-                  "Built OCR for scanning package labels",
-                  "Setup Sentry tool (monitoring and error detection)",
-                  "Handle upload file, camera (Flutter MethodChannel + Kotlin code)",
-                  "Managed local and Firebase notifications.",
-                ],
-              ),
-              SizedBox(height: 30.h),
-              const ExperienceCard(
-                icon: 'assets/images/png/ic_ecaraid.png',
-                title: "Mobile Developer (Flutter)",
-                company: "EcarAid",
-                date: "June 2022 - January 2024",
-                descriptions: [
-                  "Integrated GPT chat and handled Firebase notifications",
-                  "Built booking features for car repairs and chat functionality",
-                  "Implemented car club membership and QR code sharing.",
-                  "Build and deploy app on AppCenter",
-                  "Daily meeting",
-                ],
-              ),
-            ],
+    return SectionShell(
+      child: Column(
+        children: [
+          Reveal(
+            child: SectionHeader(
+              eyebrow: AppText.experienceEyebrow,
+              title: AppText.experienceTitle,
+              subtitle: AppText.experienceSubtitle,
+            ),
           ),
-        );
-      },
+          SizedBox(height: 56.h),
+          for (int i = 0; i < PortfolioData.experiences.length; i++) ...[
+            Reveal(
+              delayMs: 120 + i * 80,
+              child: _ExperienceCard(item: PortfolioData.experiences[i]),
+            ),
+            if (i != PortfolioData.experiences.length - 1)
+              SizedBox(height: 26.h),
+          ],
+        ],
+      ),
     );
   }
 }
 
-class ExperienceCard extends StatelessWidget {
-  final String icon;
-  final String title;
-  final String company;
-  final String date;
-  final List<String> descriptions;
-  const ExperienceCard({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.company,
-    required this.date,
-    required this.descriptions,
-  });
+class _ExperienceCard extends StatelessWidget {
+  final ExperienceItem item;
+  const _ExperienceCard({required this.item});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingBloc, SettingState>(
-      builder: (context, state) {
-        return Container(
-          decoration: BoxDecoration(
-            color: state.themeMode == ThemeMode.dark
-                ? ColorUtils.blackDefault
-                : ColorUtils.gray200,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 26.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  icon,
-                  width: 220,
-                  height: 100,
-                  fit: BoxFit.contain,
+    final width = MediaQuery.of(context).size.width;
+    final isNarrow = width < 720;
+    return GlassCard(
+      padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 28.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Company header.
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  gradient: ColorUtils.accentGradient,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                SizedBox(height: 20.h),
-                TextViewUtils.selectTitleBold(
-                  text: title,
-                  fontSize: 20,
+                child: Text(
+                  item.company.substring(0, 1),
+                  style:
+                      TextStyleUtils.bold(20).copyWith(color: ColorUtils.ink),
                 ),
-                SizedBox(height: 20.h),
+              ),
+              SizedBox(width: 16.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.company,
+                      style: TextStyleUtils.bold(22)
+                          .copyWith(color: ColorUtils.textPrimary),
+                    ),
+                    SizedBox(height: 2.h),
+                    Text(
+                      item.role,
+                      style: TextStyleUtils.medium(15)
+                          .copyWith(color: ColorUtils.accentPink),
+                    ),
+                  ],
+                ),
+              ),
+              if (!isNarrow)
                 Text(
-                  date,
-                  style: TextStyleUtils.regular(14).copyWith(
-                    color: state.themeMode == ThemeMode.dark
-                        ? ColorUtils.gray100
-                        : ColorUtils.gray900,
-                  ),
+                  item.period,
+                  style: TextStyleUtils.medium(14)
+                      .copyWith(color: ColorUtils.textMuted),
                 ),
-                SizedBox(height: 20.h),
-                ListView.builder(
-                  itemCount: descriptions.length,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(left: 30.w),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 5,
-                            height: 5,
-                            margin: const EdgeInsets.only(right: 10),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: state.themeMode == ThemeMode.dark
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                          ),
-                          Expanded(
-                            child: TextViewUtils.descriptionsRegular(
-                              text: descriptions[index],
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ],
+            ],
+          ),
+          if (isNarrow) ...[
+            SizedBox(height: 12.h),
+            Text(
+              item.period,
+              style: TextStyleUtils.medium(14)
+                  .copyWith(color: ColorUtils.textMuted),
+            ),
+          ],
+          SizedBox(height: 22.h),
+          Divider(color: Colors.white.withOpacity(0.07), height: 1),
+          SizedBox(height: 22.h),
+          for (int i = 0; i < item.projects.length; i++) ...[
+            _ProjectBlock(project: item.projects[i]),
+            if (i != item.projects.length - 1) SizedBox(height: 24.h),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _ProjectBlock extends StatelessWidget {
+  final ProjectItem project;
+  const _ProjectBlock({required this.project});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 12.w,
+          runSpacing: 8.h,
+          children: [
+            Text(
+              project.name,
+              style: TextStyleUtils.semiBold(18)
+                  .copyWith(color: ColorUtils.textPrimary),
+            ),
+            Text(
+              project.domain,
+              style: TextStyleUtils.regular(14)
+                  .copyWith(color: ColorUtils.textMuted),
+            ),
+          ],
+        ),
+        SizedBox(height: 12.h),
+        _HighlightTag(text: project.highlight),
+        SizedBox(height: 16.h),
+        for (final b in project.bullets) BulletRow(text: b),
+      ],
+    );
+  }
+}
+
+class _HighlightTag extends StatelessWidget {
+  final String text;
+  const _HighlightTag({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            ColorUtils.accentPink.withOpacity(0.18),
+            ColorUtils.accentViolet.withOpacity(0.18),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: ColorUtils.accentPink.withOpacity(0.35)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.trending_up_rounded,
+              size: 16, color: ColorUtils.accentPink),
+          SizedBox(width: 8.w),
+          Flexible(
+            child: Text(
+              text,
+              style: TextStyleUtils.semiBold(13)
+                  .copyWith(color: ColorUtils.textPrimary),
             ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }

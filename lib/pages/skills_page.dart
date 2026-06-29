@@ -1,114 +1,104 @@
 part of './main_page.dart';
 
-class SkillsPage extends StatefulWidget {
+class SkillsPage extends StatelessWidget {
   const SkillsPage({super.key});
 
-  @override
-  State<SkillsPage> createState() => _SkillsPageState();
-}
-
-class _SkillsPageState extends State<SkillsPage> {
-  List<Skill> listSkills = [
-    Skill(
-      iconPath: 'assets/images/svg/ic_flutter.svg',
-      name: 'Flutter',
-      url: 'https://flutter.dev/',
-    ),
-    Skill(
-      iconPath: 'assets/images/svg/ic_dart.svg',
-      name: 'Dart',
-      url: 'https://dart.dev/',
-    ),
-    Skill(
-        iconPath: 'assets/images/svg/ic_kotlin.svg',
-        name: 'Kotlin',
-        url: 'https://kotlinlang.org/,'),
-    Skill(
-      iconPath: 'assets/images/svg/ic_java.svg',
-      name: 'Java',
-      url: 'https://www.java.com/en/',
-    ),
-    Skill(
-      iconPath: 'assets/images/svg/ic_nodejs.svg',
-      name: 'Node JS',
-      url: 'https://nodejs.org/en',
-    ),
-    Skill(
-      iconPath: 'assets/images/svg/ic_mongo.svg',
-      name: 'Mongo DB',
-      url: 'https://www.mongodb.com/',
-    ),
-    Skill(
-      iconPath: 'assets/images/svg/ic_sql.svg',
-      name: 'SQL Server',
-      url: 'https://www.microsoft.com/en-us/sql-server',
-    ),
-    Skill(
-      iconPath: 'assets/images/svg/ic_socket_io.svg',
-      name: 'Socket io',
-      url: 'https://socket.io/',
-    ),
-    Skill(
-      iconPath: 'assets/images/svg/ic_git.svg',
-      name: 'Git',
-      url: 'https://git-scm.com/',
-    ),
-    Skill(
-      iconPath: 'assets/images/svg/ic_android.svg',
-      name: 'Android Studio',
-      url: 'https://developer.android.com/',
-    ),
-    Skill(
-      iconPath: 'assets/images/svg/ic_vscode.svg',
-      name: 'Visual Code',
-      url: 'https://code.visualstudio.com/',
-    ),
-    Skill(
-      iconPath: 'assets/images/svg/ic_jira.svg',
-      name: 'Jira',
-      url: 'https://www.atlassian.com/software/jira',
-    ),
-    Skill(
-      iconPath: 'assets/images/svg/ic_rocketchat.svg',
-      name: 'Rocket Chat',
-      url: 'https://www.rocket.chat/',
-    ),
+  static final List<Skill> _coreTech = [
+    Skill(iconPath: 'assets/images/svg/ic_flutter.svg', name: 'Flutter', url: 'https://flutter.dev/'),
+    Skill(iconPath: 'assets/images/svg/ic_dart.svg', name: 'Dart', url: 'https://dart.dev/'),
+    Skill(iconPath: 'assets/images/svg/ic_kotlin.svg', name: 'Kotlin', url: 'https://kotlinlang.org/'),
+    Skill(iconPath: 'assets/images/svg/ic_java.svg', name: 'Java', url: 'https://www.java.com/en/'),
+    Skill(iconPath: 'assets/images/svg/ic_nodejs.svg', name: 'Node JS', url: 'https://nodejs.org/en'),
+    Skill(iconPath: 'assets/images/svg/ic_mongo.svg', name: 'Mongo DB', url: 'https://www.mongodb.com/'),
+    Skill(iconPath: 'assets/images/svg/ic_sql.svg', name: 'SQL Server', url: 'https://www.microsoft.com/en-us/sql-server'),
+    Skill(iconPath: 'assets/images/svg/ic_socket_io.svg', name: 'Socket.IO', url: 'https://socket.io/'),
+    Skill(iconPath: 'assets/images/svg/ic_git.svg', name: 'Git', url: 'https://git-scm.com/'),
+    Skill(iconPath: 'assets/images/svg/ic_android.svg', name: 'Android Studio', url: 'https://developer.android.com/'),
+    Skill(iconPath: 'assets/images/svg/ic_vscode.svg', name: 'VS Code', url: 'https://code.visualstudio.com/'),
+    Skill(iconPath: 'assets/images/svg/ic_jira.svg', name: 'Jira', url: 'https://www.atlassian.com/software/jira'),
+    Skill(iconPath: 'assets/images/svg/ic_rocketchat.svg', name: 'Rocket Chat', url: 'https://www.rocket.chat/'),
   ];
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 140.h),
+    final width = MediaQuery.of(context).size.width;
+    final categoryCols = width < 720 ? 1 : (width < 1024 ? 2 : 3);
+
+    return SectionShell(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(
-            child: TextViewUtils.titleBold(
-              text: "Skills",
+          Reveal(
+            child: SectionHeader(
+              eyebrow: AppText.skillsEyebrow,
+              title: AppText.skillsTitle,
+              subtitle: AppText.skillsSubtitle,
             ),
           ),
-          SizedBox(height: 20.h),
-          TextViewUtils.descriptionsRegular(
-            text: "The skills, tools and technologies I am really good at:",
-          ),
-          SizedBox(height: 40.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 150.w),
+          SizedBox(height: 56.h),
+          Reveal(
+            delayMs: 120,
             child: Wrap(
               alignment: WrapAlignment.center,
-              spacing: 60.w,
-              runSpacing: 60.w,
-              runAlignment: WrapAlignment.center,
+              spacing: 44.w,
+              runSpacing: 36.h,
               children: [
-                for (var item in listSkills)
-                  SkillItem(
-                    iconPath: item.iconPath,
-                    name: item.name,
-                    url: item.url,
-                    isHover: false,
-                  ),
+                for (final s in _coreTech) SkillItem(skill: s),
               ],
             ),
-          )
+          ),
+          SizedBox(height: 64.h),
+          Reveal(
+            delayMs: 200,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final spacing = 20.0;
+                final cardWidth =
+                    (constraints.maxWidth - spacing * (categoryCols - 1)) /
+                        categoryCols;
+                return Wrap(
+                  spacing: spacing,
+                  runSpacing: spacing,
+                  children: [
+                    for (final c in PortfolioData.skillCategories)
+                      SizedBox(
+                        width: cardWidth,
+                        child: _SkillCategoryCard(category: c),
+                      ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SkillCategoryCard extends StatelessWidget {
+  final SkillCategory category;
+  const _SkillCategoryCard({required this.category});
+
+  @override
+  Widget build(BuildContext context) {
+    return GlassCard(
+      padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 24.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            category.title,
+            style: TextStyleUtils.semiBold(17)
+                .copyWith(color: ColorUtils.textPrimary),
+          ),
+          SizedBox(height: 16.h),
+          Wrap(
+            spacing: 10.w,
+            runSpacing: 10.h,
+            children: [
+              for (final item in category.items) TechChip(label: item),
+            ],
+          ),
         ],
       ),
     );
@@ -116,66 +106,49 @@ class _SkillsPageState extends State<SkillsPage> {
 }
 
 class SkillItem extends StatefulWidget {
-  final String iconPath;
-  final String name;
-  final String url;
-  final bool isHover;
-  const SkillItem({
-    super.key,
-    required this.iconPath,
-    required this.name,
-    required this.url,
-    required this.isHover,
-  });
+  final Skill skill;
+  const SkillItem({super.key, required this.skill});
 
   @override
   State<SkillItem> createState() => _SkillItemState();
 }
 
 class _SkillItemState extends State<SkillItem> {
-  bool isHover = false;
-  @override
-  void initState() {
-    isHover = widget.isHover;
-    super.initState();
-  }
+  bool _hover = false;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            OpenWeb.openURL(widget.url);
-          },
-          child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            onHover: (v) {
-              setState(() {
-                isHover = true;
-              });
-            },
-            onExit: (v) {
-              setState(() {
-                isHover = false;
-              });
-            },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 100),
-              transform: Matrix4.identity()..scale(isHover ? 1.2 : 1.0),
+    return GestureDetector(
+      onTap: () => OpenWeb.openURL(widget.skill.url),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _hover = true),
+        onExit: (_) => setState(() => _hover = false),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 160),
+              transform: Matrix4.identity()..scale(_hover ? 1.15 : 1.0),
+              transformAlignment: Alignment.center,
               child: SvgPicture.asset(
-                widget.iconPath,
-                width: 50,
-                height: 50,
+                widget.skill.iconPath,
+                width: 48,
+                height: 48,
               ),
             ),
-          ),
+            SizedBox(height: 12.h),
+            Text(
+              widget.skill.name,
+              style: TextStyleUtils.medium(13).copyWith(
+                color: _hover
+                    ? ColorUtils.textPrimary
+                    : ColorUtils.textSecondary,
+              ),
+            ),
+          ],
         ),
-        SizedBox(height: 10.h),
-        TextViewUtils.descriptionsRegular(
-          text: widget.name,
-        ),
-      ],
+      ),
     );
   }
 }

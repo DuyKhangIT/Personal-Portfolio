@@ -50,9 +50,9 @@ class MyApp extends StatelessWidget {
                   localizationsDelegates: context.localizationDelegates,
                   supportedLocales: context.supportedLocales,
                   locale: context.locale,
-                  theme: lightTheme,
-                  themeMode: state.themeMode,
-                  darkTheme: darkTheme,
+                  theme: milkinsideTheme,
+                  darkTheme: milkinsideTheme,
+                  themeMode: ThemeMode.dark,
                   home: const MainPage(),
                 ),
               );

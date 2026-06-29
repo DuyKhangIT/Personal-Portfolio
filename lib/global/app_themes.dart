@@ -3,64 +3,35 @@ import 'package:flutter/material.dart';
 import '../ultils/color_utils.dart';
 import '../ultils/text_style_utils.dart';
 
-ThemeData lightTheme = ThemeData(
-  brightness: Brightness.light,
-  primaryColor: Colors.white,
-  canvasColor: Colors.white,
-  appBarTheme: AppBarTheme(
-    elevation: 0,
-    backgroundColor: Colors.transparent,
-    titleTextStyle:
-        TextStyleUtils.bold(26).copyWith(color: ColorUtils.blackDefault),
-  ),
-  textSelectionTheme: const TextSelectionThemeData(selectionColor: Colors.grey),
-  scaffoldBackgroundColor: Colors.white,
-  iconTheme: IconThemeData(
-    color: Colors.grey.shade600,
-  ),
-  buttonTheme: const ButtonThemeData(buttonColor: ColorUtils.gray900),
+/// The site is dark-only (full Milkinside aesthetic).
+ThemeData milkinsideTheme = ThemeData(
+  brightness: Brightness.dark,
+  scaffoldBackgroundColor: ColorUtils.ink,
+  canvasColor: ColorUtils.ink,
+  primaryColor: ColorUtils.accentPink,
+  fontFamily: TextStyleUtils.interRegular,
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
-  textButtonTheme: TextButtonThemeData(
-    style: ButtonStyle(
-      foregroundColor: WidgetStateProperty.all<Color>(Colors.black87),
+  hoverColor: Colors.transparent,
+  textSelectionTheme: TextSelectionThemeData(
+    selectionColor: ColorUtils.accentViolet.withOpacity(0.35),
+    cursorColor: ColorUtils.accentPink,
+  ),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    iconTheme: const IconThemeData(color: ColorUtils.textPrimary),
+    titleTextStyle: TextStyleUtils.bold(24).copyWith(
+      color: ColorUtils.textPrimary,
     ),
   ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.black87,
-      foregroundColor: Colors.white,
-      disabledBackgroundColor: ColorUtils.gray900,
-      disabledForegroundColor: Colors.white,
-    ),
+  colorScheme: const ColorScheme.dark(
+    surface: ColorUtils.surface,
+    primary: ColorUtils.accentPink,
+    secondary: ColorUtils.accentViolet,
   ),
 );
 
-ThemeData darkTheme = ThemeData(
-  brightness: Brightness.dark,
-  primaryColor: ColorUtils.blackDefault,
-  appBarTheme: AppBarTheme(
-    backgroundColor: Colors.transparent,
-    elevation: 0,
-    titleTextStyle:
-        TextStyleUtils.bold(26).copyWith(color: ColorUtils.whiteDefault),
-  ),
-  scaffoldBackgroundColor: ColorUtils.blackDefault,
-  textSelectionTheme: const TextSelectionThemeData(selectionColor: Colors.grey),
-  buttonTheme: const ButtonThemeData(buttonColor: Color(0xFFF9FAFB)),
-  splashColor: Colors.transparent,
-  highlightColor: Colors.transparent,
-  textButtonTheme: TextButtonThemeData(
-    style: ButtonStyle(
-      foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-    ),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      disabledBackgroundColor: Colors.white,
-      disabledForegroundColor: Colors.white,
-    ),
-  ),
-);
+// Kept so existing references keep compiling; both map to the dark theme.
+ThemeData darkTheme = milkinsideTheme;
+ThemeData lightTheme = milkinsideTheme;
