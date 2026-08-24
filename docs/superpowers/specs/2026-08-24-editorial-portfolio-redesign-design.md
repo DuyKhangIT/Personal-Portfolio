@@ -160,7 +160,7 @@ expands on hover; below 900px it is always visible, since there is no hover.
 
 ### 4. `/STACK` — ghost word `TECH`
 
-Six groups from the CV's TECHNICAL SKILLS, rendered as label + chip cluster.
+Seven groups from the CV's TECHNICAL SKILLS, rendered as label + chip cluster.
 
 ### 5. `/EXPERIENCE` — dark section
 
@@ -200,7 +200,7 @@ class ProjectItem {
 `coverAsset` is the slot for real screenshots later. When null, the card and
 overlay render the typographic cover.
 
-Six projects, four expertise items, six stack groups, and three experience
+Six projects, four expertise items, seven stack groups, and three experience
 entries are transcribed verbatim from the CV.
 
 ## Responsive behaviour

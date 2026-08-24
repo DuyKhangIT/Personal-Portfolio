@@ -154,9 +154,9 @@ void main() {
     }
   });
 
-  test('has four expertise items, six stack groups, three experiences', () {
+  test('has four expertise items, seven stack groups, three experiences', () {
     expect(PortfolioData.expertise, hasLength(4));
-    expect(PortfolioData.stack, hasLength(6));
+    expect(PortfolioData.stack, hasLength(7));
     expect(PortfolioData.experiences, hasLength(3));
   });
 
@@ -184,7 +184,7 @@ Six projects, verbatim from the CV:
 | `impl` | IMPL App | Logistics & Delivery (Singapore) | ECR Vietnam | enterprise | 99.9% crash-free · manual entry −70% |
 | `eca` | eCa App | Automotive Community & Roadside Rescue | EcarAid | production | 50+ active communities |
 
-Bullets, team sizes and tech lists come straight from the CV's PROFESSIONAL EXPERIENCE section. Expertise is the four KEY STRENGTHS items. Stack is the six TECHNICAL SKILLS groups. Experiences are Eggstech (May 2025 – Present, no logo), ECR Vietnam (Feb 2024 – Apr 2025, `assets/images/png/ic_ecr.png`), EcarAid (Jun 2022 – Jan 2024, `assets/images/png/ic_ecaraid.png`).
+Bullets, team sizes and tech lists come straight from the CV's PROFESSIONAL EXPERIENCE section. Expertise is the four KEY STRENGTHS items. Stack is the seven TECHNICAL SKILLS groups. Experiences are Eggstech (May 2025 – Present, no logo), ECR Vietnam (Feb 2024 – Apr 2025, `assets/images/png/ic_ecr.png`), EcarAid (Jun 2022 – Jan 2024, `assets/images/png/ic_ecaraid.png`).
 
 - [ ] **Step 4: Run the test and confirm it passes**
 
@@ -491,7 +491,7 @@ git commit -m "feat(sections): add expertise rows"
 
 - [ ] **Step 1: Implement**
 
-`GhostHeading(ghost: 'TECH', label: '/STACK')`, then six groups. Each group is a two-column row above 900px — group title at `rowTitle` scaled 0.7× on the left, a `Wrap` of `EditorialChip(selected: false)` items on the right — stacking vertically below 900px. `hairline` divider between groups, each group in `RevealOnScroll` with an 80ms stagger.
+`GhostHeading(ghost: 'TECH', label: '/STACK')`, then seven groups. Each group is a two-column row above 900px — group title at `rowTitle` scaled 0.7× on the left, a `Wrap` of `EditorialChip(selected: false)` items on the right — stacking vertically below 900px. `hairline` divider between groups, each group in `RevealOnScroll` with an 80ms stagger.
 
 - [ ] **Step 2: Verify analysis and commit**
 
