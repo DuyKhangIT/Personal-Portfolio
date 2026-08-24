@@ -46,8 +46,11 @@ class _HoverScaleState extends State<HoverScale> {
       cursor: SystemMouseCursors.click,
       onEnter: (_) => _setHovered(true),
       onExit: (_) => _setHovered(false),
+      // expand, so the child fills the box the caller sized (an AspectRatio,
+      // say) instead of shrinking to its own content. The overlay is centred
+      // separately so it keeps its intrinsic size.
       child: Stack(
-        alignment: Alignment.center,
+        fit: StackFit.expand,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
@@ -60,15 +63,17 @@ class _HoverScaleState extends State<HoverScale> {
           ),
           if (widget.overlay != null)
             IgnorePointer(
-              child: AnimatedOpacity(
-                opacity: _hovered ? 1 : 0,
-                duration: EditorialMotion.hoverDuration,
-                curve: EditorialMotion.hoverCurve,
-                child: AnimatedScale(
-                  scale: _hovered ? 1 : 0.8,
+              child: Center(
+                child: AnimatedOpacity(
+                  opacity: _hovered ? 1 : 0,
                   duration: EditorialMotion.hoverDuration,
                   curve: EditorialMotion.hoverCurve,
-                  child: widget.overlay,
+                  child: AnimatedScale(
+                    scale: _hovered ? 1 : 0.8,
+                    duration: EditorialMotion.hoverDuration,
+                    curve: EditorialMotion.hoverCurve,
+                    child: widget.overlay,
+                  ),
                 ),
               ),
             ),

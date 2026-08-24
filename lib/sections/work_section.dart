@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../data/portfolio_data.dart';
@@ -23,13 +24,13 @@ List<ProjectItem> filterProjects(
 }
 
 class WorkSection extends StatefulWidget {
-  final double scrollOffset;
+  final ValueListenable<double>? scrollOffset;
   final ValueChanged<ProjectItem> onOpenProject;
 
   const WorkSection({
     super.key,
     required this.onOpenProject,
-    this.scrollOffset = 0,
+    this.scrollOffset,
   });
 
   @override
@@ -103,33 +104,46 @@ class _FilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isCompact = MediaQuery.sizeOf(context).width < 900;
+
+    final chips = Wrap(
+      spacing: 10,
+      runSpacing: 10,
+      children: [
+        EditorialChip(
+          label: 'All',
+          selected: selected == null,
+          onTap: () => onChanged(null),
+        ),
+        for (final category in ProjectCategory.values)
+          EditorialChip(
+            label: category.filterLabel,
+            selected: selected == category,
+            onTap: () => onChanged(category),
+          ),
+      ],
+    );
+
+    final github = PillButton(
+      label: 'GitHub',
+      showArrow: true,
+      onTap: () => OpenWeb.openURL(PortfolioData.profile.github),
+    );
+
+    // Side by side there is not enough room for both on a phone, and the
+    // chips would wrap into the button.
+    if (isCompact) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [chips, const SizedBox(height: 16), github],
+      );
+    }
+
     return Row(
       children: [
-        Expanded(
-          child: Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: [
-              EditorialChip(
-                label: 'All',
-                selected: selected == null,
-                onTap: () => onChanged(null),
-              ),
-              for (final category in ProjectCategory.values)
-                EditorialChip(
-                  label: category.filterLabel,
-                  selected: selected == category,
-                  onTap: () => onChanged(category),
-                ),
-            ],
-          ),
-        ),
+        Expanded(child: chips),
         const SizedBox(width: 16),
-        PillButton(
-          label: 'GitHub',
-          showArrow: true,
-          onTap: () => OpenWeb.openURL(PortfolioData.profile.github),
-        ),
+        github,
       ],
     );
   }

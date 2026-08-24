@@ -35,7 +35,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final _experienceKey = GlobalKey();
   final _contactKey = GlobalKey();
 
-  double _offset = 0;
+  /// Published rather than held in State: only the ghost words listen, so a
+  /// scroll repaints those and nothing else.
+  final ValueNotifier<double> _offset = ValueNotifier<double>(0);
 
   @override
   void initState() {
@@ -43,15 +45,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
     _scrollController.addListener(_onScroll);
   }
 
-  void _onScroll() {
-    if (!mounted) return;
-    setState(() => _offset = _scrollController.offset);
-  }
+  void _onScroll() => _offset.value = _scrollController.offset;
 
   @override
   void dispose() {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _offset.dispose();
     super.dispose();
   }
 
@@ -129,8 +129,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.topCenter,
+          // Positioned rather than Align: Align hands the nav the Stack's
+          // full height, and the Center inside it would then park the pill
+          // in the middle of the viewport.
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
             child: EditorialNav(
               destinations: _destinations,
               onTalk: () => _scrollTo(_contactKey),

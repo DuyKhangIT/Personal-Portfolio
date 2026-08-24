@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../data/portfolio_data.dart';
@@ -8,8 +9,8 @@ import '../widgets/motion/reveal_on_scroll.dart';
 import '../widgets/section_shell.dart';
 
 class ExpertiseSection extends StatelessWidget {
-  final double scrollOffset;
-  const ExpertiseSection({super.key, this.scrollOffset = 0});
+  final ValueListenable<double>? scrollOffset;
+  const ExpertiseSection({super.key, this.scrollOffset});
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../data/portfolio_data.dart';
@@ -12,8 +13,8 @@ import '../widgets/section_shell.dart';
 /// Motion pattern 6 — the page flips to the dark ground for this one section,
 /// inset with a large corner radius so it reads as a slab on the canvas.
 class ExperienceSection extends StatelessWidget {
-  final double scrollOffset;
-  const ExperienceSection({super.key, this.scrollOffset = 0});
+  final ValueListenable<double>? scrollOffset;
+  const ExperienceSection({super.key, this.scrollOffset});
 
   @override
   Widget build(BuildContext context) {

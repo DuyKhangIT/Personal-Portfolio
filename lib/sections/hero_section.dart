@@ -78,10 +78,16 @@ class _Wordmark extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = EditorialType.heroDisplay(context);
     const profile = PortfolioData.profile;
-    final portraitHeight = style.fontSize! * (isCompact ? 2.0 : 2.3);
+    final size = style.fontSize!;
+
+    // The portrait is a rectangular photo rather than a cut-out subject, so
+    // it is framed as a rounded 3:4 plate instead of bleeding into the type.
+    final portraitWidth = size * (isCompact ? 1.35 : 1.15);
+    final portraitHeight = portraitWidth * 4 / 3;
+    final portraitTop = size * 0.34;
 
     return SizedBox(
-      height: portraitHeight,
+      height: portraitTop + portraitHeight,
       child: Stack(
         alignment: Alignment.topCenter,
         clipBehavior: Clip.none,
@@ -94,20 +100,24 @@ class _Wordmark extends StatelessWidget {
 
           // The portrait, threaded between the two lines.
           Positioned(
-            top: style.fontSize! * 0.42,
+            top: portraitTop,
             child: RevealOnScroll(
-              child: Image.asset(
-                'assets/images/png/avt.png',
-                height: portraitHeight * 0.78,
-                fit: BoxFit.contain,
-                filterQuality: FilterQuality.high,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(size * 0.08),
+                child: Image.asset(
+                  'assets/images/png/avt.png',
+                  width: portraitWidth,
+                  height: portraitHeight,
+                  fit: BoxFit.cover,
+                  filterQuality: FilterQuality.high,
+                ),
               ),
             ),
           ),
 
           // Line 2 — solid, painted over the portrait.
           Positioned(
-            top: style.fontSize! * 0.92,
+            top: size * 0.92,
             child: Text(profile.lastName, style: style, maxLines: 1),
           ),
         ],
