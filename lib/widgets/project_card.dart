@@ -63,7 +63,7 @@ class ProjectCover extends StatelessWidget {
   Widget build(BuildContext context) {
     final cover = project.coverAsset;
     if (cover != null) {
-      return _ScreenshotCover(project: project, asset: cover);
+      return _LogoCover(project: project, asset: cover);
     }
 
     return Container(
@@ -103,60 +103,42 @@ class ProjectCover extends StatelessWidget {
   }
 }
 
-/// A real screenshot behind the title, with a scrim so the type stays legible
-/// no matter how light or busy the shot is.
-class _ScreenshotCover extends StatelessWidget {
+/// The app's logo centred on a soft ground — the app-store-tile look. The
+/// project name lives beneath the card, so the cover carries only the mark
+/// and the category badge.
+class _LogoCover extends StatelessWidget {
   final ProjectItem project;
   final String asset;
 
-  const _ScreenshotCover({required this.project, required this.asset});
+  const _LogoCover({required this.project, required this.asset});
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: EditorialColors.coverGradient,
+        border: Border.all(color: EditorialColors.hairline),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      clipBehavior: Clip.antiAlias,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          // Portrait phone screenshots: bias the crop to the top, where the
-          // hero imagery and branding sit, rather than the centre chrome.
-          Image.asset(
-            asset,
-            fit: BoxFit.cover,
-            alignment: const Alignment(0, -0.85),
-            filterQuality: FilterQuality.high,
-          ),
-          const DecoratedBox(
-            decoration: BoxDecoration(gradient: EditorialColors.coverScrim),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(36),
+              child: Image.asset(
+                asset,
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.high,
+              ),
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _CategoryBadge(category: project.category),
-                const Spacer(),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    project.name,
-                    maxLines: 2,
-                    style: EditorialType.cardTitle(context).copyWith(
-                      fontSize: EditorialType.cardTitle(context).fontSize! * 1.7,
-                      fontWeight: FontWeight.w600,
-                      height: 1.05,
-                      color: EditorialColors.surface,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  project.impact,
-                  style: EditorialType.meta(context)
-                      .copyWith(color: EditorialColors.surface),
-                ),
-              ],
+            padding: const EdgeInsets.all(20),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: _CategoryBadge(category: project.category),
             ),
           ),
         ],

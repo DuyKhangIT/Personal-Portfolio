@@ -46,8 +46,8 @@ class ProjectItem {
   final String? playStoreUrl;
   final String? appStoreUrl;
 
-  /// Screenshot for the card cover. Null today — cards fall back to a
-  /// typographic cover until real screenshots are supplied.
+  /// The app logo shown on the card cover. Null for projects without a logo,
+  /// which fall back to the grey typographic cover.
   final String? coverAsset;
 
   const ProjectItem({
@@ -163,7 +163,7 @@ class PortfolioData {
       company: 'Eggstech',
       role: 'Lead Mobile',
       period: 'May 2025 — Present',
-      coverAsset: 'assets/images/projects/rocky-app.png',
+      coverAsset: 'assets/images/projects/rocky-app-logo.png',
       playStoreUrl:
           'https://play.google.com/store/apps/details?id=com.eggstech.rocky.app',
       appStoreUrl: 'https://apps.apple.com/vn/app/rocky/id6749456460',
@@ -199,7 +199,7 @@ class PortfolioData {
       domain: 'F&B Chain Application',
       company: 'Eggstech',
       period: 'May 2025 — Present',
-      coverAsset: 'assets/images/projects/champong.png',
+      coverAsset: 'assets/images/projects/champong-logo.png',
       playStoreUrl:
           'https://play.google.com/store/apps/details?id=com.eggstech.champong.app',
       appStoreUrl:
@@ -313,7 +313,7 @@ class PortfolioData {
       domain: 'Automotive Community & Roadside Rescue',
       company: 'EcarAid',
       period: 'Jun 2022 — Jan 2024',
-      coverAsset: 'assets/images/projects/eca.png',
+      coverAsset: 'assets/images/projects/eca-logo.png',
       playStoreUrl:
           'https://play.google.com/store/apps/details?id=com.ecaraid.eca',
       appStoreUrl: 'https://apps.apple.com/vn/app/eca/id1613176058',

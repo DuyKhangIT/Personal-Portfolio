@@ -29,8 +29,12 @@ void main() {
     expect(PortfolioData.experiences, hasLength(3));
   });
 
-  test('no project has a cover asset yet', () {
-    expect(PortfolioData.projects.every((p) => p.coverAsset == null), isTrue);
+  test('cover assets, when present, live under the projects asset folder', () {
+    for (final p in PortfolioData.projects) {
+      if (p.coverAsset != null) {
+        expect(p.coverAsset, startsWith('assets/images/projects/'), reason: p.id);
+      }
+    }
   });
 
   test('every experience references projects that exist', () {
