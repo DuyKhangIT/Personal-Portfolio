@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ class _RevealOnScrollState extends State<RevealOnScroll>
   );
 
   bool _triggered = false;
+  Timer? _delayTimer;
 
   void _onVisibilityChanged(VisibilityInfo info) {
     if (_triggered || info.visibleFraction < widget.threshold) return;
@@ -52,13 +54,14 @@ class _RevealOnScrollState extends State<RevealOnScroll>
       _controller.forward();
       return;
     }
-    Future<void>.delayed(widget.delay, () {
-      if (mounted) _controller.forward();
-    });
+    // Held so it can be cancelled — a staggered list scrolled past quickly
+    // would otherwise leave timers running against disposed widgets.
+    _delayTimer = Timer(widget.delay, _controller.forward);
   }
 
   @override
   void dispose() {
+    _delayTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }
