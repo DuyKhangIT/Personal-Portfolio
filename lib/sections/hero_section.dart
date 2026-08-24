@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../data/portfolio_data.dart';
@@ -9,8 +11,8 @@ import '../widgets/motion/reveal_on_scroll.dart';
 import '../widgets/pill_button.dart';
 import '../widgets/section_shell.dart';
 
-/// The opening screen: an oversized two-line wordmark with the portrait
-/// threaded between the lines, flanked by the title block and social links.
+/// The opening screen: an oversized wordmark over a blurred, full-width
+/// avatar backdrop, flanked by the title block and social links.
 class HeroSection extends StatelessWidget {
   /// Scrolls the page to the contact section.
   final VoidCallback onContact;
@@ -21,47 +23,95 @@ class HeroSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isCompact = MediaQuery.sizeOf(context).width < 900;
 
-    return SectionShell(
-      padding: EdgeInsets.fromLTRB(
-        SectionShell.gutterOf(context),
-        isCompact ? 120 : 150,
-        SectionShell.gutterOf(context),
-        isCompact ? 64 : 96,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+    return SizedBox(
+      width: double.infinity,
+      child: Stack(
         children: [
-          const _Wordmark(),
-          SizedBox(height: isCompact ? 48 : 88),
-          if (isCompact)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          const Positioned.fill(child: _HeroBackdrop()),
+          SectionShell(
+            padding: EdgeInsets.fromLTRB(
+              SectionShell.gutterOf(context),
+              isCompact ? 120 : 150,
+              SectionShell.gutterOf(context),
+              isCompact ? 64 : 96,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const _TitleBlock(),
-                const SizedBox(height: 28),
-                _CtaButton(onContact: onContact),
-                const SizedBox(height: 36),
-                const _SocialLinks(horizontal: true),
-              ],
-            )
-          else
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: Column(
+                const _Wordmark(),
+                SizedBox(height: isCompact ? 48 : 88),
+                if (isCompact)
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const _TitleBlock(),
                       const SizedBox(height: 28),
                       _CtaButton(onContact: onContact),
+                      const SizedBox(height: 36),
+                      const _SocialLinks(horizontal: true),
+                    ],
+                  )
+                else
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const _TitleBlock(),
+                            const SizedBox(height: 28),
+                            _CtaButton(onContact: onContact),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 48),
+                      const _SocialLinks(horizontal: false),
                     ],
                   ),
-                ),
-                const SizedBox(width: 48),
-                const _SocialLinks(horizontal: false),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The avatar, blown up full-width, heavily blurred and washed out under a
+/// white veil so the ink wordmark reads cleanly on top. The veil deepens to
+/// solid white at the bottom edge so the hero melts into the canvas below.
+class _HeroBackdrop extends StatelessWidget {
+  const _HeroBackdrop();
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRect(
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          ImageFiltered(
+            imageFilter: ImageFilter.blur(sigmaX: 36, sigmaY: 36),
+            child: Image.asset(
+              'assets/images/png/avt.png',
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+            ),
+          ),
+          const DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xD9FFFFFF),
+                  Color(0xE6FFFFFF),
+                  Color(0xFFFFFFFF),
+                ],
+                stops: [0.0, 0.55, 1.0],
+              ),
+            ),
+          ),
         ],
       ),
     );
