@@ -31,8 +31,8 @@ class HeroSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _Wordmark(isCompact: isCompact),
-          SizedBox(height: isCompact ? 40 : 24),
+          const _Wordmark(),
+          SizedBox(height: isCompact ? 48 : 88),
           if (isCompact)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,59 +68,26 @@ class HeroSection extends StatelessWidget {
   }
 }
 
-/// `HUYNH` in outline over `DUY KHANG` solid, with the portrait rising
-/// between the two lines.
+/// `DUY` outlined next to `KHANG` solid, on one line, scaled to the measure.
 class _Wordmark extends StatelessWidget {
-  final bool isCompact;
-  const _Wordmark({required this.isCompact});
+  const _Wordmark();
 
   @override
   Widget build(BuildContext context) {
     final style = EditorialType.heroDisplay(context);
     const profile = PortfolioData.profile;
-    final size = style.fontSize!;
 
-    // The portrait is a rectangular photo rather than a cut-out subject, so
-    // it is framed as a rounded 3:4 plate instead of bleeding into the type.
-    final portraitWidth = size * (isCompact ? 1.35 : 1.15);
-    final portraitHeight = portraitWidth * 4 / 3;
-    final portraitTop = size * 0.34;
-
-    return SizedBox(
-      height: portraitTop + portraitHeight,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        clipBehavior: Clip.none,
-        children: [
-          // Line 1 — outline, sits behind the portrait.
-          Align(
-            alignment: Alignment.topCenter,
-            child: _OutlineText(text: profile.firstName, style: style),
-          ),
-
-          // The portrait, threaded between the two lines.
-          Positioned(
-            top: portraitTop,
-            child: RevealOnScroll(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(size * 0.08),
-                child: Image.asset(
-                  'assets/images/png/avt.png',
-                  width: portraitWidth,
-                  height: portraitHeight,
-                  fit: BoxFit.cover,
-                  filterQuality: FilterQuality.high,
-                ),
-              ),
-            ),
-          ),
-
-          // Line 2 — solid, painted over the portrait.
-          Positioned(
-            top: size * 0.92,
-            child: Text(profile.lastName, style: style, maxLines: 1),
-          ),
-        ],
+    return RevealOnScroll(
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _OutlineText(text: profile.heroOutline, style: style),
+            SizedBox(width: style.fontSize! * 0.16),
+            Text(profile.heroSolid, style: style, maxLines: 1),
+          ],
+        ),
       ),
     );
   }

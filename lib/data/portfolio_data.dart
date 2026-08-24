@@ -96,15 +96,18 @@ class ExperienceItem {
     required this.projectIds,
     this.logoAsset,
   });
-
-  /// Fallback for the cursor-following preview when there is no logo.
-  String get monogram =>
-      company.isEmpty ? '?' : company.substring(0, 1).toUpperCase();
 }
 
 class Profile {
-  final String firstName;
-  final String lastName;
+  /// Hero wordmark, first line half — rendered as outline.
+  final String heroOutline;
+
+  /// Hero wordmark, solid half.
+  final String heroSolid;
+
+  /// The full legal name, used where the wordmark is not.
+  final String fullName;
+
   final String title;
   final String tagline;
   final String summary;
@@ -116,8 +119,9 @@ class Profile {
   final int yearsExperience;
 
   const Profile({
-    required this.firstName,
-    required this.lastName,
+    required this.heroOutline,
+    required this.heroSolid,
+    required this.fullName,
     required this.title,
     required this.tagline,
     required this.summary,
@@ -128,16 +132,15 @@ class Profile {
     required this.linkedin,
     required this.yearsExperience,
   });
-
-  String get fullName => '$firstName $lastName';
 }
 
 class PortfolioData {
   const PortfolioData._();
 
   static const Profile profile = Profile(
-    firstName: 'HUYNH',
-    lastName: 'DUY KHANG',
+    heroOutline: 'DUY',
+    heroSolid: 'KHANG',
+    fullName: 'Huynh Duy Khang',
     title: 'Mobile Engineer',
     tagline: 'Flutter Expert · 4 years · 6+ production apps shipped',
     summary:

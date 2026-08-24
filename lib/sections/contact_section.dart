@@ -29,8 +29,6 @@ class ContactSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const RevealOnScroll(child: AvailabilityBadge()),
-          const SizedBox(height: 28),
           RevealOnScroll(
             delay: EditorialMotion.staggerStep,
             child: Text(
@@ -88,6 +86,7 @@ class ContactSection extends StatelessWidget {
               children: [
                 PillButton(
                   label: profile.fullName,
+                  filled: true,
                   leading: ClipOval(
                     child: Image.asset(
                       'assets/images/png/avt.png',

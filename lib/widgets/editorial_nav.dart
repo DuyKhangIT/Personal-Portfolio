@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../data/portfolio_data.dart';
 import '../theme/editorial_colors.dart';
 import '../theme/editorial_motion.dart';
 import '../theme/editorial_type.dart';
@@ -63,7 +64,16 @@ class EditorialNav extends StatelessWidget {
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const AvailabilityBadge(),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: Text(
+                              PortfolioData.profile.heroSolid,
+                              style: EditorialType.meta(context).copyWith(
+                                color: EditorialColors.ink,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
                           IconButton(
                             onPressed: onMenu,
                             icon: const Icon(
@@ -75,8 +85,7 @@ class EditorialNav extends StatelessWidget {
                       )
                     : Row(
                         children: [
-                          const AvailabilityBadge(),
-                          const SizedBox(width: 24),
+                          const SizedBox(width: 8),
                           for (final destination in destinations)
                             _NavItem(destination: destination),
                           const Spacer(),

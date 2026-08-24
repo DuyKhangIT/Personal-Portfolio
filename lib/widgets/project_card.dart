@@ -63,7 +63,7 @@ class ProjectCover extends StatelessWidget {
   Widget build(BuildContext context) {
     final cover = project.coverAsset;
     if (cover != null) {
-      return Image.asset(cover, fit: BoxFit.cover);
+      return _ScreenshotCover(project: project, asset: cover);
     }
 
     return Container(
@@ -96,6 +96,61 @@ class ProjectCover extends StatelessWidget {
             project.impact,
             style: EditorialType.meta(context)
                 .copyWith(color: EditorialColors.inkFaint),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A real screenshot behind the title, with a scrim so the type stays legible
+/// no matter how light or busy the shot is.
+class _ScreenshotCover extends StatelessWidget {
+  final ProjectItem project;
+  final String asset;
+
+  const _ScreenshotCover({required this.project, required this.asset});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(asset, fit: BoxFit.cover, filterQuality: FilterQuality.high),
+          const DecoratedBox(
+            decoration: BoxDecoration(gradient: EditorialColors.coverScrim),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _CategoryBadge(category: project.category),
+                const Spacer(),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    project.name,
+                    maxLines: 2,
+                    style: EditorialType.cardTitle(context).copyWith(
+                      fontSize: EditorialType.cardTitle(context).fontSize! * 1.7,
+                      fontWeight: FontWeight.w600,
+                      height: 1.05,
+                      color: EditorialColors.surface,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  project.impact,
+                  style: EditorialType.meta(context)
+                      .copyWith(color: EditorialColors.surface),
+                ),
+              ],
+            ),
           ),
         ],
       ),

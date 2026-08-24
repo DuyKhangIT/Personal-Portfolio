@@ -9,13 +9,15 @@ class EditorialColors {
   const EditorialColors._();
 
   // ── Light ground ────────────────────────────────────────────────
-  static const Color canvas = Color(0xFFF4F4F3);
+  // Strictly neutral greys: any green channel above blue reads as a warm
+  // yellow cast across a full page of near-white.
+  static const Color canvas = Color(0xFFFFFFFF);
   static const Color surface = Color(0xFFFFFFFF);
   static const Color ink = Color(0xFF0A0A0A);
   static const Color inkSoft = Color(0xFF6B6B6B);
-  static const Color inkFaint = Color(0xFF9A9A98);
-  static const Color hairline = Color(0xFFE5E5E3);
-  static const Color ghost = Color(0xFFEAEAE8);
+  static const Color inkFaint = Color(0xFF9B9B9B);
+  static const Color hairline = Color(0xFFE6E6E6);
+  static const Color ghost = Color(0xFFF0F0F0);
 
   /// The "available for work" status dot.
   static const Color available = Color(0xFF22C55E);
@@ -30,7 +32,16 @@ class EditorialColors {
   static const LinearGradient coverGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [Color(0xFFFAFAF9), Color(0xFFEFEFED)],
+    colors: [Color(0xFFF7F7F7), Color(0xFFECECEC)],
+  );
+
+  /// Laid over a project screenshot so the title stays legible whatever the
+  /// screenshot happens to be.
+  static const LinearGradient coverScrim = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Color(0x00000000), Color(0x1A000000), Color(0xB3000000)],
+    stops: [0.35, 0.6, 1.0],
   );
 }
 

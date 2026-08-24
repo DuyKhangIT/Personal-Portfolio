@@ -108,26 +108,3 @@ class _PillButtonState extends State<PillButton> {
     );
   }
 }
-
-/// The `● Available for New Project` badge — a pill with a live status dot.
-class AvailabilityBadge extends StatelessWidget {
-  final EditorialPalette palette;
-  const AvailabilityBadge({super.key, this.palette = EditorialPalette.light});
-
-  @override
-  Widget build(BuildContext context) {
-    return PillButton(
-      label: 'Available for New Project',
-      dense: true,
-      palette: palette,
-      leading: Container(
-        width: 8,
-        height: 8,
-        decoration: const BoxDecoration(
-          color: EditorialColors.available,
-          shape: BoxShape.circle,
-        ),
-      ),
-    );
-  }
-}

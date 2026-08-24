@@ -108,16 +108,13 @@ class _TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        PillButton(
-          label: 'Back',
-          trailingIcon: Icons.arrow_back_rounded,
-          onTap: onBack,
-        ),
-        const AvailabilityBadge(),
-      ],
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: PillButton(
+        label: 'Back',
+        trailingIcon: Icons.arrow_back_rounded,
+        onTap: onBack,
+      ),
     );
   }
 }
