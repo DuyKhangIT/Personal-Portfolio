@@ -118,7 +118,14 @@ class _ScreenshotCover extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(asset, fit: BoxFit.cover, filterQuality: FilterQuality.high),
+          // Portrait phone screenshots: bias the crop to the top, where the
+          // hero imagery and branding sit, rather than the centre chrome.
+          Image.asset(
+            asset,
+            fit: BoxFit.cover,
+            alignment: const Alignment(0, -0.85),
+            filterQuality: FilterQuality.high,
+          ),
           const DecoratedBox(
             decoration: BoxDecoration(gradient: EditorialColors.coverScrim),
           ),

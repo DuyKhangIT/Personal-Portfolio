@@ -163,6 +163,10 @@ class PortfolioData {
       company: 'Eggstech',
       role: 'Lead Mobile',
       period: 'May 2025 — Present',
+      coverAsset: 'assets/images/projects/rocky-app.png',
+      playStoreUrl:
+          'https://play.google.com/store/apps/details?id=com.eggstech.rocky.app',
+      appStoreUrl: 'https://apps.apple.com/vn/app/rocky/id6749456460',
       teamSize: '10 · 1 Lead Mobile, 2 Mobile, 3 BE, 2 Web, 1 QC, 1 PM',
       category: ProjectCategory.production,
       impact: 'Feature delivery ~30% faster',
@@ -195,6 +199,11 @@ class PortfolioData {
       domain: 'F&B Chain Application',
       company: 'Eggstech',
       period: 'May 2025 — Present',
+      coverAsset: 'assets/images/projects/champong.png',
+      playStoreUrl:
+          'https://play.google.com/store/apps/details?id=com.eggstech.champong.app',
+      appStoreUrl:
+          'https://apps.apple.com/vn/app/id6753157313',
       teamSize: '7 · 1 Mobile, 2 BE, 2 Web, 1 QC, 1 PM',
       category: ProjectCategory.production,
       impact: 'Image load 1.2s → 0.3s · storage −35%',
@@ -304,6 +313,10 @@ class PortfolioData {
       domain: 'Automotive Community & Roadside Rescue',
       company: 'EcarAid',
       period: 'Jun 2022 — Jan 2024',
+      coverAsset: 'assets/images/projects/eca.png',
+      playStoreUrl:
+          'https://play.google.com/store/apps/details?id=com.ecaraid.eca',
+      appStoreUrl: 'https://apps.apple.com/vn/app/eca/id1613176058',
       teamSize: '10 · 2 Mobile, 1 Lead Mobile, 1 Lead BE, 2 BE, 2 Web, 1 QC, 1 PM',
       category: ProjectCategory.production,
       impact: '50+ active communities',

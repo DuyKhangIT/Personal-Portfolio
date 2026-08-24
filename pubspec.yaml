@@ -89,6 +89,7 @@ flutter:
   assets:
     - assets/images/svg/
     - assets/images/png/
+    - assets/images/projects/
     - assets/images/gif/
     - assets/images/pdf/
     - assets/translations/
