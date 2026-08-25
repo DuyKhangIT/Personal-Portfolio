@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/portfolio_data.dart';
+import '../dev/perf_probe.dart';
 import '../overlays/project_detail_overlay.dart';
 import '../sections/contact_section.dart';
 import '../sections/experience_section.dart';
@@ -43,6 +44,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    PerfProbe.start();
   }
 
   void _onScroll() => _offset.value = _scrollController.offset;
@@ -90,6 +92,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
         NavDestination(label: 'Contact', onTap: () => _scrollTo(_contactKey)),
       ];
 
+  /// Sections are isolated behind repaint boundaries.
+  ///
+  /// A [SingleChildScrollView] paints its child at an offset without any
+  /// boundary of its own, so without these every section's `paint` re-runs on
+  /// every scrolled frame — the whole page, not just what moved. Measured at
+  /// roughly 2ms of the UI-thread frame budget on a throttled CPU.
+  Widget _section(Widget child) => RepaintBoundary(child: child);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,29 +112,29 @@ class _PortfolioPageState extends State<PortfolioPage> {
             controller: _scrollController,
             child: Column(
               children: [
-                HeroSection(onContact: () => _scrollTo(_contactKey)),
+                _section(HeroSection(onContact: () => _scrollTo(_contactKey))),
                 KeyedSubtree(
                   key: _workKey,
-                  child: WorkSection(
+                  child: _section(WorkSection(
                     scrollOffset: _offset,
                     onOpenProject: _openProject,
-                  ),
+                  )),
                 ),
                 KeyedSubtree(
                   key: _expertiseKey,
-                  child: ExpertiseSection(scrollOffset: _offset),
+                  child: _section(ExpertiseSection(scrollOffset: _offset)),
                 ),
                 KeyedSubtree(
                   key: _stackKey,
-                  child: StackSection(scrollOffset: _offset),
+                  child: _section(StackSection(scrollOffset: _offset)),
                 ),
                 KeyedSubtree(
                   key: _experienceKey,
-                  child: ExperienceSection(scrollOffset: _offset),
+                  child: _section(ExperienceSection(scrollOffset: _offset)),
                 ),
                 KeyedSubtree(
                   key: _contactKey,
-                  child: const ContactSection(),
+                  child: _section(const ContactSection()),
                 ),
               ],
             ),

@@ -64,7 +64,11 @@ class GhostHeading extends StatelessWidget {
                 ? word
                 : ValueListenableBuilder<double>(
                     valueListenable: scrollOffset!,
-                    child: word,
+                    // The word is the one thing in an otherwise static section
+                    // that moves every frame. Its own boundary keeps that
+                    // movement from invalidating the section's boundary and
+                    // dragging the whole section into a repaint with it.
+                    child: RepaintBoundary(child: word),
                     builder: (context, offset, child) {
                       // A slow drift, bounded so the word never wanders far
                       // enough to look detached from its label.

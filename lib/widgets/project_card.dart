@@ -130,7 +130,10 @@ class _LogoCover extends StatelessWidget {
               child: Image.asset(
                 asset,
                 fit: BoxFit.contain,
-                filterQuality: FilterQuality.high,
+                // Medium, not high: the cubic pass high applies is re-run on
+                // every frame the cover scales under the pointer, and the logo
+                // is downscaled far enough that the difference does not show.
+                filterQuality: FilterQuality.medium,
               ),
             ),
           ),
