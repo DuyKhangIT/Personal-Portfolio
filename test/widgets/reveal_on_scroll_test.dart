@@ -54,4 +54,68 @@ void main() {
     await tester.pump(EditorialMotion.revealDuration);
     expect(opacityOf(tester).opacity, 1.0);
   });
+
+  testWidgets('collapses to its child once the reveal has landed',
+      (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(body: RevealOnScroll(child: Text('hello'))),
+      ),
+    );
+
+    // Settle rather than counting pumps: the reveal fires a frame after the
+    // visibility callback, and the collapse a frame after the animation ends.
+    await tester.pumpAndSettle();
+
+    // A revealed section keeps neither a visibility detector nor the animation
+    // wrappers — both cost UI-thread time on every subsequent scrolled frame.
+    expect(
+      find.descendant(
+        of: find.byType(RevealOnScroll),
+        matching: find.byType(VisibilityDetector),
+      ),
+      findsNothing,
+    );
+    expect(
+      find.descendant(
+        of: find.byType(RevealOnScroll),
+        matching: find.byType(Opacity),
+      ),
+      findsNothing,
+    );
+    expect(find.text('hello'), findsOneWidget);
+  });
+
+  testWidgets('a reveal that never becomes visible keeps its child hidden',
+      (tester) async {
+    // Guards the collapse above: it must key off the animation completing, not
+    // merely off time passing, or offscreen sections would pop in un-animated.
+    // SingleChildScrollView, not ListView: a lazy list would never build the
+    // offscreen child at all, and the test would pass without proving anything.
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 2000),
+                RevealOnScroll(child: Container(height: 50)),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(opacityOf(tester).opacity, 0.0);
+    expect(
+      find.descendant(
+        of: find.byType(RevealOnScroll),
+        matching: find.byType(VisibilityDetector),
+      ),
+      findsOneWidget,
+    );
+  });
 }

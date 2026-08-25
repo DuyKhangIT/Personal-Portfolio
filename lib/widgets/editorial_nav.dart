@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../data/portfolio_data.dart';
@@ -22,6 +20,13 @@ class NavDestination {
 
 /// The floating nav pill. Below 900px it collapses to the availability badge
 /// plus a menu button, since the full row cannot fit.
+///
+/// The pill is opaque rather than frosted. A `BackdropFilter` here has to read
+/// back and re-blur the page beneath it on every scrolled frame, which measured
+/// as the largest steady-state scroll cost on the site — ~10fps, and dropped
+/// frames going from 7 to 32 over a six-second scroll. Lowering the blur sigma
+/// does not help: the cost is the readback, not the kernel width. A soft shadow
+/// carries the "floating above the page" read instead.
 class EditorialNav extends StatelessWidget {
   final List<NavDestination> destinations;
   final VoidCallback onTalk;
@@ -38,6 +43,59 @@ class EditorialNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final isCompact = MediaQuery.sizeOf(context).width < 900;
 
+    final bar = Container(
+      decoration: BoxDecoration(
+        color: EditorialColors.surface,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: EditorialColors.hairline),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x14000000),
+            blurRadius: 24,
+            offset: Offset(0, 6),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: isCompact
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Text(
+                    PortfolioData.profile.heroSolid,
+                    style: EditorialType.meta(context).copyWith(
+                      color: EditorialColors.ink,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: onMenu,
+                  icon: const Icon(
+                    Icons.menu_rounded,
+                    color: EditorialColors.ink,
+                  ),
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                const SizedBox(width: 8),
+                for (final destination in destinations)
+                  _NavItem(destination: destination),
+                const Spacer(),
+                PillButton(
+                  label: "Let's Talk",
+                  filled: true,
+                  showArrow: true,
+                  onTap: onTalk,
+                ),
+              ],
+            ),
+    );
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isCompact ? 16 : 24,
@@ -46,60 +104,9 @@ class EditorialNav extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1180),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: EditorialColors.surface.withValues(alpha: 0.72),
-                  borderRadius: BorderRadius.circular(999),
-                  border: Border.all(color: EditorialColors.hairline),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 10,
-                ),
-                child: isCompact
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12),
-                            child: Text(
-                              PortfolioData.profile.heroSolid,
-                              style: EditorialType.meta(context).copyWith(
-                                color: EditorialColors.ink,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: onMenu,
-                            icon: const Icon(
-                              Icons.menu_rounded,
-                              color: EditorialColors.ink,
-                            ),
-                          ),
-                        ],
-                      )
-                    : Row(
-                        children: [
-                          const SizedBox(width: 8),
-                          for (final destination in destinations)
-                            _NavItem(destination: destination),
-                          const Spacer(),
-                          PillButton(
-                            label: "Let's Talk",
-                            filled: true,
-                            showArrow: true,
-                            onTap: onTalk,
-                          ),
-                        ],
-                      ),
-              ),
-            ),
-          ),
+          // No ClipRRect: the pill already rounds itself, and clipping would
+          // cut off the shadow that replaces the frosted edge.
+          child: RepaintBoundary(child: bar),
         ),
       ),
     );

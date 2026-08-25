@@ -54,11 +54,15 @@ class _HoverScaleState extends State<HoverScale> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
-            child: AnimatedScale(
-              scale: _hovered ? widget.scale : 1,
-              duration: EditorialMotion.hoverDuration,
-              curve: EditorialMotion.hoverCurve,
-              child: widget.child,
+            // The scale animates on hover; its own boundary keeps those frames
+            // from invalidating the whole section's repaint boundary.
+            child: RepaintBoundary(
+              child: AnimatedScale(
+                scale: _hovered ? widget.scale : 1,
+                duration: EditorialMotion.hoverDuration,
+                curve: EditorialMotion.hoverCurve,
+                child: widget.child,
+              ),
             ),
           ),
           if (widget.overlay != null)
